@@ -4,12 +4,9 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+Finally moving from [old page](https://sites.google.com/site/kamalgupta308/) to Jekyll, hoping to do some justice to the new website cum blog. Promising myself to be more regular and more meticulous.
 
-### More Information
-
-A place to include any other types of information that you'd like to include about yourself.
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[kamalgupta308@gmail.com](mailto:kamalgupta@gmail.com)
