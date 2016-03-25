@@ -3,7 +3,7 @@ layout: post
 title: Parallel processing in python
 ---
 
-Python's `multiprocessing` module had been a tool of my choice until I came across `pathos`. Here are couple of reasons why
+Python's `multiprocessing` module had been a tool of my choice until I came across `pathos`.
 
 ## Why `multiprocessing` in python is broken
 
