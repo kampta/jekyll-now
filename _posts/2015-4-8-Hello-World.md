@@ -1,9 +1,8 @@
 ---
 layout: post
 title: You're up and running!
+excerpt: Moved to Jekyll and its sweet! Just need to update a markdown file per blog post and voilà!
 ---
-
-Moved to Jekyll and its sweet! Just need to update a markdown file per blog post and voilà!
 
 ## How to
 For instructions refer [https://github.com/barryclark/jekyll-now](https://github.com/barryclark/jekyll-now). This will help you link your github account to the blog. No need of Jekyll on your local machine, as github takes care of it all. However, if you want to develop blog locally there are few gotchas.
