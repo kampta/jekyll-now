@@ -57,7 +57,6 @@ Its a bit strange how functions are passed to subprocesses using `pickle`. In ca
 	def add(x,y):
 		return x+y
 	    
-	    
 	p = Pool(6)
 	partial_add = partial(add, y=1)
 	inX = range(10)
@@ -83,7 +82,6 @@ More problems come when you are trying to parallelize a method within your class
 		def run(self):
 	    		p = Pool(processes=4)
 			return p.map(self.square, range(10))
-
 
 	if __name__== '__main__' :
 		m = myClass()
@@ -111,7 +109,6 @@ from multiprocessing import Pool
 		        inX = range(10)
 		        return p.map(out_square, zip([self]*len(inX), inX))
 
-
 	if __name__== '__main__' :
 		m = myClass()
 		print m.run()
@@ -121,11 +118,8 @@ from multiprocessing import Pool
 
 For non-static methods, above problem has been discussed in [stackoverflow](http://stackoverflow.com/questions/1816958/cant-pickle-type-instancemethod-when-using-pythons-multiprocessing-pool-ma). From what I understand, python can pickle standalone references to functions but not class methods. When method exists within a class, you have to provide with extra infrastructure in the class to make the method "pickle-able". One way to do that is to use `copy_reg` described in an answer by **Steven Bethard** [here](http://bytes.com/topic/python/answers/552476-why-cant-you-pickle-instancemethods).
 
----
-
-I came across [Pathos](https://github.com/uqfoundation/pathos.git), a python parallel processing library from caltech. Since I have stopped using `multiprocessing` module altogether.
-
 ## Comes Pathos
+I came across [Pathos](https://github.com/uqfoundation/pathos.git), a python parallel processing library from caltech. Since then, I have stopped using `multiprocessing` module altogether.
 
 In author's language "Pathos is a framework for heterogenous computing. It primarily provides the communication mechanisms for configuring and launching parallel computations across heterogenous resources".
 
@@ -155,6 +149,8 @@ Let's take a look at simple applications using pathos
 
 [Out]:	[0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
 ```
+
+For methods within a class
 
 ```python
 [In]:	from pathos.multiprocessing import ProcessingPool as Pool

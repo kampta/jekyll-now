@@ -3,10 +3,10 @@
 #
 
 # Name of your site (displayed in the header)
-name: Kamal Gupta
+name: kampta
 
 # Short bio or description (displayed in the header)
-description: Reverse Engineer
+description: Lernen durch Codierung
 
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 avatar: https://www.gravatar.com/avatar/a3fe98194076676cf4674a06e63c56ad.jpg
@@ -18,7 +18,7 @@ avatar: https://www.gravatar.com/avatar/a3fe98194076676cf4674a06e63c56ad.jpg
 # Includes an icon in the footer for each username you enter
 footer-links:
   dribbble:
-  email:
+  email: kamalgupta308@gmail.com
   facebook: kamalgupta09
   flickr: # kamalgupta09
   instagram:
