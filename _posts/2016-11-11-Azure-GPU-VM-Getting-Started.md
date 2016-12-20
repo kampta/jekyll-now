@@ -38,11 +38,12 @@ That might mean, you need to [apply here](http://gpu.azure.com) to get approval 
 ## Install nvidia drivers
 
 That's straightforward too
+
 ```
 docker-machine ssh my-awesome-machine
 sudo apt-get purge nvidia-*
 sudo add-apt-repository ppa:graphics-drivers/ppa
-sudo apt-get update.
+sudo apt-get update
 sudo apt-get install nvidia-370
 ```
 
