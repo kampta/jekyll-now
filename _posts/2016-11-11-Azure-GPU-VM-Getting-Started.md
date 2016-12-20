@@ -4,7 +4,7 @@ title: How to use GPU based Virtual Machines on Azure!
 excerpt: Microsot recently (August 4, 2016) announced their Azure N-Series Virtual Machines. I was at the time evaluating options to serve deep learning models on GPUs and decided to give it a try. It was actually pretty straightforward.
 ---
 
-Microsoft [announced](https://azure.microsoft.com/en-in/blog/azure-n-series-preview-availability/) has started providing GPU based Virtual Machines as Azure N-Series. There are two categories:
+Microsoft recently [announced](https://azure.microsoft.com/en-in/blog/azure-n-series-preview-availability/) provision of GPU based Virtual Machines as Azure N-Series. There are two categories:
 
 1. NC-Series (compute-focused GPUs), powered by Tesla K80 GPUs
 2. NV-Series (focused on visualization), using Tesla M60 GPUs and NVIDIA GRID for desktop accelerated applications
@@ -13,7 +13,7 @@ I needed GPU based servers for serving few deep learning models, so NC-Series wa
 
 ## Creating a new VM
 
-I am not big Microsoft buff, and I use [`docker-machine`](https://docs.docker.com/machine/) to manage all my VMs. It makes getting started/switching over to any cloud server, be it Azure/AWS/DigitalOcean very seemless. If you haven't already, I'll recommend [installing](https://docs.docker.com/machine/) it right away.
+I am not big Microsoft buff and don't use [ARM](https://docs.microsoft.com/en-us/rest/api/resources/) for managing Azure resources. I resort to [`docker-machine`](https://docs.docker.com/machine/) to manage all my VMs. It makes getting started/switching over to any cloud server, be it Azure/AWS/DigitalOcean very seemless. If you haven't already, I'll recommend [installing](https://docs.docker.com/machine/) it right away.
 
 ```
 docker-machine create --driver azure \
