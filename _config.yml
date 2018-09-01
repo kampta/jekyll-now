@@ -1,3 +1,4 @@
+
 #
 # This file contains configuration flags to customize your site
 #
@@ -20,8 +21,8 @@ footer-links:
   dribbble:
   email: kamalgupta308@gmail.com
   facebook: kamalgupta09
-  flickr: # kamalgupta09
-  instagram:
+  flickr: kamalgupta09
+  instagram: kampta
   linkedin: kamalgupta09
   pinterest:
   rss: # just type anything here for a working RSS icon, make sure you set the "url" above!
