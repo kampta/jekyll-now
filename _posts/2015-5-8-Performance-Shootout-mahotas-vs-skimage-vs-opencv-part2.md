@@ -10,7 +10,7 @@ Updated to latest versions of OpenCV/mahotas/skimage
 
 ---
 
-In the [last post](http://kampta.github.io/Performance-Shootout-mahotas-vs-skimage-vs-opencv-part1/), we benchmarked of three different libraries for performing simple morphological operations on images. Current post covers benchmarks for more computation intensive operations like computing texture features of an image. Such features, for example, [haralick](http://murphylab.web.cmu.edu/publications/boland/boland_node26.html) features, [zernike](https://en.wikipedia.org/wiki/Zernike_polynomials) moments, [hu](https://www.youtube.com/watch?v=O-hCEXi3ymU) moments describe various aspects of image like texture, shape, patterns and are still often used for classification and tagging purposes
+In the [last post](http://kampta.github.io/Performance-Shootout-mahotas-vs-skimage-vs-opencv-part1/), we benchmarked three different libraries for performing simple morphological operations on images. Current post covers benchmarks for more computation intensive operations like computing texture features of an image. Such features, for example, [haralick](http://murphylab.web.cmu.edu/publications/boland/boland_node26.html) features, [zernike](https://en.wikipedia.org/wiki/Zernike_polynomials) moments, [hu](https://www.youtube.com/watch?v=O-hCEXi3ymU) moments describe various aspects of image like texture, shape, patterns and are still often used for classification and tagging purposes
 
 ## 1. Boilerplate Stuff
 
