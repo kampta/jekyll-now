@@ -345,7 +345,7 @@ for name,statements in tests:
 
 **AND we have a winner**
 
-OpenCV outperforms mahotas and skimage (by an order of manitude).
+OpenCV outperforms mahotas and skimage (by an order of magnitude).
 
 I performed a bit experimentation computing more intensive image features like haralick features and hu moments. Will share my findings in the [next blog](http://kampta.github.io/Performance-Shootout-mahotas-vs-skimage-vs-opencv-part2/).
 
