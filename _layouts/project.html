@@ -7,41 +7,6 @@ layout: default_project
     <h1>{{ page.title }}</h1>
   </div>
 
-  <div class="container">
-  <nav_justify>
-  <a href="{{ page.code }}">Code</a>
-  <a href="{{ page.paper }}">arXiv</a>
-  <a href="https://www.youtube.com/watch?v={{ page.video }}">Video</a>
-  </nav_justify>
-  </div>
-
-  <br/><br/>
-
-  <div align="justify">
-    {{ page.tldr }}
-  </div>
-
-  <br/><br/>
-
-  <img src="/images/{{ page.png }}" alt="HTML5 Icon" style="float:left;margin-right:2em;margin-bottom:2em;">
-
-  <div align="center">
-    <h1>Abstract</h1>
-  </div>
-
-  <div align="justify">
-    {{ page.abstract }}
-  </div>
-
-  <div align="center">
-    <h1>Video</h1>
-  </div>
-
-  {% youtube page.video%}
-
-  <div align="center">
-    <h1>Cite</h1>
-  </div>
 
   <div class="entry">
     {{ content }}
