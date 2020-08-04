@@ -56,7 +56,7 @@ png: patchvae/teaser.png
     <h1>Video</h1>
   </div>
   
-  <div class="entry">
+  <div class="entry" align="center">
   {% include youtube.html id="nshuuEzc3kc" %}
   </div>
       
