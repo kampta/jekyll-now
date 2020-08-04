@@ -4,7 +4,7 @@ layout: default
 
 <div class="posts">
   {% for post in site.posts %}
-    {% if post.type == "project" %}
+    {% if post.layout == "project" %}
     <article class="post">
       <img src="/images/{{ post.gif }}" alt="HTML5 Icon" style="width:224px;height:224px;float:left;margin-right:2em;">
 
@@ -14,9 +14,9 @@ layout: default
         {{ post.excerpt }}
       </div>
 
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Web</a> &nbsp;&nbsp;&nbsp;
-      <a href="{{ post.code }}" class="read-more">Code</a> &nbsp;&nbsp;&nbsp;
-      <a href="{{ post.paper }}" class="read-more">arXiv</a>
+      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">[Web]</a> &nbsp;&nbsp;&nbsp;
+      <a href="{{ post.code }}" class="read-more">[Code]</a> &nbsp;&nbsp;&nbsp;
+      <a href="{{ post.paper }}" class="read-more">[arXiv]</a>
     </article>
     {% endif %}
   {% endfor %}
