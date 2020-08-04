@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parallel processing in python – Lernen durch Codierung</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="I stopped using Python's multiprocessing module for quite some time now. But decided to blog about it only recently (not because a blog post has been long due, but because pathos definitely deserves one)." />
+    <meta property="og:description" content="I stopped using Python's multiprocessing module for quite some time now. But decided to blog about it only recently (not because a blog post has been long due, but because pathos definitely deserves one)." />
+    
+    <meta name="author" content="kampta" />
+
+    
+    <meta property="og:title" content="Parallel processing in python" />
+    <meta property="twitter:title" content="Parallel processing in python" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="kampta - Lernen durch Codierung" href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://www.gravatar.com/avatar/a3fe98194076676cf4674a06e63c56ad.jpg" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">kampta</a></h1>
+            <p class="site-description">Lernen durch Codierung</p>
+          </div>
+
+          <nav>
+            <a href="/research">Research</a>
+            <a href="/blog">Blog</a>
+            <a href="/about">About</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Parallel processing in python</h1>
+
+  <div class="entry">
+    <p>I stopped using Python’s <code class="highlighter-rouge">multiprocessing</code> module for quite some time now. But decided to blog about it only recently (not because a blog post has been long due, but because <code class="highlighter-rouge">pathos</code> definitely deserves one).</p>
+
+<h2 id="multiprocessing-module-is-broken"><code class="highlighter-rouge">multiprocessing</code> module is broken</h2>
+
+<p>There are few problems I face while using existing multiprocessing library in python. Here I am going to discuss two of them which I face very often.
+Lets start off with an example of simple usage of the library</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">In</span><span class="p">]:</span>	<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+
+	<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
+
+	<span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+	<span class="n">inX</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+	<span class="k">print</span> <span class="n">p</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="n">inX</span><span class="p">)</span>
+
+<span class="p">[</span><span class="n">Out</span><span class="p">]:</span>	<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Works fine!</p>
+
+<h3 id="problem-1-passing-multiple-arguments-to-a-method">Problem 1: Passing multiple arguments to a method</h3>
+
+<p>But if I want to pass on both <code class="highlighter-rouge">inX</code> and <code class="highlighter-rouge">inY</code>, the code breaks:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>TypeError: unsupported operand type(s) for //: 'int' and 'list'
+</code></pre></div></div>
+
+<p>To my surprise, it’s not straightforward to pass more than one argument to <code class="highlighter-rouge">Pool.map</code>. In a simple case of passing multiple arguments to <code class="highlighter-rouge">multiprocessing.Pool.map</code> method, I have to use a workaround like following</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">In</span><span class="p">]:</span>	<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">tuple_of_numbers</span><span class="p">):</span>
+		<span class="n">x</span> <span class="o">=</span> <span class="n">tuple_of_numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">y</span> <span class="o">=</span> <span class="n">tuple_of_numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+	    
+	<span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+	<span class="n">inX</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+	<span class="n">inY</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+	<span class="k">print</span> <span class="n">p</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">inX</span><span class="p">,</span> <span class="n">inY</span><span class="p">))</span>
+
+<span class="p">[</span><span class="n">Out</span><span class="p">]:</span>	<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Its a bit strange how functions are passed to subprocesses using <code class="highlighter-rouge">pickle</code>. In case, your add function doesn’t take default values, there is another work around using <code class="highlighter-rouge">partial</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">In</span><span class="p">]:</span>	<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+	    
+	<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+		<span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+	    
+	<span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+	<span class="n">partial_add</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+	<span class="n">inX</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+	<span class="k">print</span> <span class="n">p</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">partial_add</span><span class="p">,</span> <span class="n">inX</span><span class="p">)</span>
+
+<span class="p">[</span><span class="n">Out</span><span class="p">]:</span>	<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="problem-2-parallelizing-a-method-within-a-class">Problem 2: Parallelizing a method within a class</h3>
+
+<p>More problems come when you are trying to parallelize a method within your class</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">In</span><span class="p">]:</span>	<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
+	    
+	<span class="k">class</span> <span class="nc">myClass</span><span class="p">:</span>
+		<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+			<span class="k">pass</span>
+	    
+		<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+			<span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+	    
+		<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+	    		<span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+			<span class="k">return</span> <span class="n">p</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">square</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+	<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span> <span class="s">'__main__'</span> <span class="p">:</span>
+		<span class="n">m</span> <span class="o">=</span> <span class="n">myClass</span><span class="p">()</span>
+		<span class="k">print</span> <span class="n">m</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="p">[</span><span class="n">Out</span><span class="p">]:</span>	<span class="n">PicklingError</span><span class="p">:</span> <span class="n">Can</span><span class="s">'t pickle &lt;type '</span><span class="n">instancemethod</span><span class="s">'&gt;: attribute lookup __builtin__.instancemethod failed
+</span></code></pre></div></div>
+<p>For static methods, there is a bit dirty get around</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
+
+<span class="p">[</span><span class="n">In</span><span class="p">]:</span>	<span class="k">def</span> <span class="nf">out_square</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="o">**</span><span class="n">kwarg</span><span class="p">):</span>
+		<span class="k">return</span> <span class="n">myClass</span><span class="p">.</span><span class="n">square</span><span class="p">(</span><span class="o">*</span><span class="n">arg</span><span class="p">,</span> <span class="o">**</span><span class="n">kwarg</span><span class="p">)</span>
+
+	<span class="k">class</span> <span class="nc">myClass</span><span class="p">:</span>
+		<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		        <span class="k">pass</span>
+
+		<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+		        <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+
+		<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		        <span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+		        <span class="n">inX</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+		        <span class="k">return</span> <span class="n">p</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">out_square</span><span class="p">,</span> <span class="nb">zip</span><span class="p">([</span><span class="bp">self</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">inX</span><span class="p">),</span> <span class="n">inX</span><span class="p">))</span>
+
+	<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span> <span class="s">'__main__'</span> <span class="p">:</span>
+		<span class="n">m</span> <span class="o">=</span> <span class="n">myClass</span><span class="p">()</span>
+		<span class="k">print</span> <span class="n">m</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="p">[</span><span class="n">Out</span><span class="p">]:</span>	<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">81</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>For non-static methods, above problem has been discussed in <a href="http://stackoverflow.com/questions/1816958/cant-pickle-type-instancemethod-when-using-pythons-multiprocessing-pool-ma">stackoverflow</a>. From what I understand, python can pickle standalone references to functions but not class methods. When method exists within a class, you have to provide with extra infrastructure in the class to make the method “pickle-able”. One way to do that is to use <code class="highlighter-rouge">copy_reg</code> described in an answer by <strong>Steven Bethard</strong> <a href="http://bytes.com/topic/python/answers/552476-why-cant-you-pickle-instancemethods">here</a>.</p>
+
+<h2 id="comes-pathos">Comes Pathos</h2>
+<p>I came across <a href="https://github.com/uqfoundation/pathos.git">Pathos</a>, a python parallel processing library from caltech. Since then, I have stopped using <code class="highlighter-rouge">multiprocessing</code> module altogether.</p>
+
+<p>In author’s language “Pathos is a framework for heterogenous computing. It primarily provides the communication mechanisms for configuring and launching parallel computations across heterogenous resources”.</p>
+
+<p>Documentation of the library is bit sparse. So here are some cliff notes on how to quickly start being productive with Pathos.</p>
+
+<h3 id="installing">Installing</h3>
+
+<p>Pathos will require four different packages to be installed. I installed the latest version along with dependencies the following way</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install git+https://github.com/uqfoundation/pathos.git@master
+</code></pre></div></div>
+
+<h3 id="usage">Usage</h3>
+
+<p>Let’s take a look at simple applications using pathos</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">In</span><span class="p">]:</span>	<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+		<span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+
+	<span class="kn">from</span> <span class="nn">pathos.pools</span> <span class="kn">import</span> <span class="n">ParallelPool</span> <span class="k">as</span> <span class="n">Pool</span>
+	<span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
+
+	<span class="n">inX</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+	<span class="n">inY</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+	<span class="k">print</span> <span class="n">p</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="n">inX</span><span class="p">,</span> <span class="n">inY</span><span class="p">)</span>
+
+<span class="p">[</span><span class="n">Out</span><span class="p">]:</span>	<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>For methods within a class</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">In</span><span class="p">]:</span>	<span class="kn">from</span> <span class="nn">pathos.multiprocessing</span> <span class="kn">import</span> <span class="n">ProcessingPool</span> <span class="k">as</span> <span class="n">Pool</span>
+
+	<span class="k">class</span> <span class="nc">myClass</span><span class="p">:</span>
+		<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+			<span class="k">pass</span>
+
+		<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+			<span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+
+		<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inList</span><span class="p">):</span>
+			<span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">().</span><span class="nb">map</span>
+			<span class="n">result</span> <span class="o">=</span> <span class="n">pool</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">square</span><span class="p">,</span> <span class="n">inList</span><span class="p">)</span>
+			<span class="k">return</span> <span class="n">result</span>
+
+	<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span> <span class="s">'__main__'</span> <span class="p">:</span>
+		<span class="n">m</span> <span class="o">=</span> <span class="n">myClass</span><span class="p">()</span>
+		<span class="k">print</span> <span class="n">m</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="p">[</span><span class="n">Out</span><span class="p">]:</span>	<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">81</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="summary">Summary</h2>
+<p>I highly recommend <code class="highlighter-rouge">pathos</code> for multiprocessing and making your code fast with few extra lines.</p>
+
+  </div>
+
+  <div class="date">
+    Written on April  9, 2015
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = 'kampta';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+<a href="mailto:kamalgupta308@gmail.com"><i class="svg-icon email"></i></a>
+<a href="https://www.facebook.com/kamalgupta09"><i class="svg-icon facebook"></i></a>
+<a href="https://www.flickr.com/kamalgupta09"><i class="svg-icon flickr"></i></a>
+<a href="https://github.com/kampta"><i class="svg-icon github"></i></a>
+<a href="https://instagram.com/kampta"><i class="svg-icon instagram"></i></a>
+<a href="https://www.linkedin.com/in/kamalgupta09"><i class="svg-icon linkedin"></i></a>
+
+
+<a href="https://www.twitter.com/kamalgupta09"><i class="svg-icon twitter"></i></a>
+<a href="http://stackoverflow.com/users/2353472/kampta"><i class="svg-icon stackoverflow"></i></a>
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-38633444-2', 'auto');
+		ga('send', 'pageview', {
+		  'page': '/Parallel-Processing-in-Python/',
+		  'title': 'Parallel processing in python'
+		});
+	</script>
+	<!-- End Google Analytics -->
+
+
+  </body>
+</html>

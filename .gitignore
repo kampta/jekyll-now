@@ -1,0 +1,11 @@
+_site
+.DS_Store
+*.ipynb_checkpoints
+.jekyll
+.jekyll-metadata
+.bundle
+.sass-cache
+Gemfile
+Gemfile.lock
+node_modules
+package.json

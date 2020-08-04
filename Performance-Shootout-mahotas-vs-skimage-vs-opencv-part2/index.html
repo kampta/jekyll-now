@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Performance shootout - python libraries for computer vision (Part 2/2) – Lernen durch Codierung</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="Did a little performance comparison for different image processing/computer vision libraries for computing different kinds of features from image" />
+    <meta property="og:description" content="Did a little performance comparison for different image processing/computer vision libraries for computing different kinds of features from image" />
+    
+    <meta name="author" content="kampta" />
+
+    
+    <meta property="og:title" content="Performance shootout - python libraries for computer vision (Part 2/2)" />
+    <meta property="twitter:title" content="Performance shootout - python libraries for computer vision (Part 2/2)" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="kampta - Lernen durch Codierung" href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://www.gravatar.com/avatar/a3fe98194076676cf4674a06e63c56ad.jpg" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">kampta</a></h1>
+            <p class="site-description">Lernen durch Codierung</p>
+          </div>
+
+          <nav>
+            <a href="/research">Research</a>
+            <a href="/blog">Blog</a>
+            <a href="/about">About</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Performance shootout - python libraries for computer vision (Part 2/2)</h1>
+
+  <div class="entry">
+    <p><strong>Update 2017-02-03</strong></p>
+
+<p>Updated to latest versions of OpenCV/mahotas/skimage</p>
+
+<hr />
+
+<p>In the <a href="http://kampta.github.io/Performance-Shootout-mahotas-vs-skimage-vs-opencv-part1/">last post</a>, we benchmarked three different libraries for performing simple morphological operations on images. Current post covers benchmarks for more computation intensive operations like computing texture features of an image. Such features, for example, <a href="http://murphylab.web.cmu.edu/publications/boland/boland_node26.html">haralick</a> features, <a href="https://en.wikipedia.org/wiki/Zernike_polynomials">zernike</a> moments, <a href="https://www.youtube.com/watch?v=O-hCEXi3ymU">hu</a> moments describe various aspects of image like texture, shape, patterns and are still often used for classification and tagging purposes</p>
+
+<h2 id="1-boilerplate-stuff">1. Boilerplate Stuff</h2>
+
+<p>Like before, we’ll define some basic functions for plotting. Also specifying some image paths (modify them as necessary)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">random</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">timeit</span>
+<span class="kn">import</span> <span class="nn">cv2</span><span class="p">,</span> <span class="n">mahotas</span><span class="p">,</span> <span class="n">skimage</span><span class="p">,</span> <span class="n">skimage</span><span class="p">.</span><span class="n">feature</span><span class="p">,</span> <span class="n">skimage</span><span class="p">.</span><span class="n">measure</span>
+<span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="kn">import</span> <span class="n">local_binary_pattern</span>
+<span class="kn">from</span> <span class="nn">mahotas.features.lbp</span> <span class="kn">import</span> <span class="n">lbp_transform</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="n">ImagePath</span> <span class="o">=</span> <span class="s">'brodatz/'</span>
+
+<span class="k">def</span> <span class="nf">pyplots</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">titles</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">im</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">images</span><span class="p">):</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">num</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">'gray'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">titles</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'%d'</span><span class="o">%</span><span class="p">(</span><span class="n">index</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">titles</span><span class="p">[</span><span class="n">index</span><span class="p">]))</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="s">'off'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="sample-images">Sample Images</h3>
+
+<p>Here are some of the images from Broadtz dataset</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">images</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">ImagePath</span><span class="p">)</span>
+
+<span class="n">testIdx</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">testImg</span> <span class="o">=</span> <span class="n">mahotas</span><span class="p">.</span><span class="n">imresize</span><span class="p">(</span><span class="n">mahotas</span><span class="p">.</span><span class="n">imread</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">ImagePath</span><span class="p">,</span><span class="n">images</span><span class="p">[</span><span class="n">testIdx</span><span class="p">])),</span> <span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">)).</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">allImg</span> <span class="o">=</span> <span class="p">[</span><span class="n">mahotas</span><span class="p">.</span><span class="n">imresize</span><span class="p">(</span><span class="n">mahotas</span><span class="p">.</span><span class="n">imread</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">ImagePath</span><span class="p">,</span><span class="n">im</span><span class="p">)),</span> <span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)).</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span> <span class="k">for</span> <span class="n">im</span> <span class="ow">in</span> <span class="n">images</span><span class="p">]</span>
+
+<span class="n">sample</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">allImg</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">pyplots</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/images/pershoot2/output_4_0.png" alt="_config.yml" /></p>
+
+<h3 id="comparison">Comparison</h3>
+
+<p>In order to see how good or bad a particular feature set is performing, we will compute k-nearest neighbors for given image from whole of the dataset. I am using <code class="highlighter-rouge">cv2.HISTCMP_CORREL</code> for computing distances between representation (feature vectors) of two images. To be honest, this method doesn’t perform well in most of the cases. Different distances might be relevant depending on the dataset and algorithm you use for computing features. Here we will just stick to one of the meterics for sanity.</p>
+
+<p>I might write a separate blog post comparing distance meterics. Stay tuned.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">kNN</span><span class="p">(</span><span class="n">srcVec</span><span class="p">,</span> <span class="n">destVecs</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">cv2</span><span class="p">.</span><span class="n">HISTCMP_CORREL</span><span class="p">,</span> <span class="n">absolute</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">srcVec</span> <span class="o">=</span> <span class="n">srcVec</span><span class="p">.</span><span class="n">flatten</span><span class="p">().</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">destVec</span> <span class="ow">in</span> <span class="n">destVecs</span><span class="p">:</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">compareHist</span><span class="p">(</span><span class="n">srcVec</span><span class="p">,</span> <span class="n">destVec</span><span class="p">.</span><span class="n">flatten</span><span class="p">().</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+        <span class="n">distances</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">absolute</span><span class="p">:</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="n">reverse</span><span class="p">:</span>
+        <span class="n">sortedIdx</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">distances</span><span class="p">)[</span><span class="o">-</span><span class="n">k</span><span class="p">:][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sortedIdx</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">distances</span><span class="p">)[:</span><span class="n">k</span><span class="p">]</span>
+        
+    <span class="k">return</span> <span class="n">sortedIdx</span><span class="p">,</span> <span class="p">[</span><span class="n">distances</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">sortedIdx</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="haralick-features">haralick features</h2>
+
+<p>Haralick features date back to as far as 1970s and were one of the first used to classify aerial imagery collected from satellites.</p>
+
+<p>The idea behind haralick feature extraction is to</p>
+<ul>
+  <li>compute <strong>co-occurance matrix</strong> from the image (generated by counting the number of times a pixel with value <em>i</em> is adjacent to a pixel with value <em>j</em>)</li>
+  <li>Compute statistics of the matrix like contrast, correlation, variation etc.</li>
+</ul>
+
+<h3 id="mahotas">mahotas</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">inVector</span> <span class="o">=</span> <span class="n">mahotas</span><span class="p">.</span><span class="n">features</span><span class="p">.</span><span class="n">haralick</span><span class="p">(</span><span class="n">testImg</span><span class="p">)</span>
+<span class="n">allVectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">mahotas</span><span class="p">.</span><span class="n">features</span><span class="p">.</span><span class="n">haralick</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">allImg</span><span class="p">]</span>
+
+<span class="n">nn</span><span class="p">,</span> <span class="n">distances</span> <span class="o">=</span> <span class="n">kNN</span><span class="p">(</span><span class="n">inVector</span><span class="p">,</span> <span class="n">allVectors</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">pyplots</span><span class="p">([</span><span class="n">testImg</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">allImg</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span>  <span class="ow">in</span> <span class="n">nn</span><span class="p">],</span> 
+        <span class="n">titles</span><span class="o">=</span><span class="p">[</span><span class="s">'Original'</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="s">'%d:%.2g'</span><span class="o">%</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">distance</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">nn</span><span class="p">,</span><span class="n">distances</span><span class="p">)])</span>
+</code></pre></div></div>
+
+<p><img src="/images/pershoot2/output_8_0.png" alt="_config.yml" /></p>
+
+<h3 id="skimage">skimage</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">haralick_sk</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">skimage</span><span class="p">.</span><span class="n">feature</span><span class="p">.</span><span class="n">greycomatrix</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">levels</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">symmetric</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">skimage</span><span class="p">.</span><span class="n">feature</span><span class="p">.</span><span class="n">greycoprops</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    
+<span class="n">inVector</span> <span class="o">=</span> <span class="n">haralick_sk</span><span class="p">(</span><span class="n">testImg</span><span class="p">)</span>
+<span class="n">allVectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">haralick_sk</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">allImg</span><span class="p">]</span>
+
+<span class="n">nn</span><span class="p">,</span> <span class="n">distances</span> <span class="o">=</span> <span class="n">kNN</span><span class="p">(</span><span class="n">inVector</span><span class="p">,</span> <span class="n">allVectors</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">pyplots</span><span class="p">([</span><span class="n">testImg</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">allImg</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span>  <span class="ow">in</span> <span class="n">nn</span><span class="p">],</span> 
+        <span class="n">titles</span><span class="o">=</span><span class="p">[</span><span class="s">'Original'</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="s">'%d:%.2f'</span><span class="o">%</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">distance</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">nn</span><span class="p">,</span><span class="n">distances</span><span class="p">)])</span>
+</code></pre></div></div>
+
+<p><img src="/images/pershoot2/output_10_0.png" alt="_config.yml" /></p>
+
+<h2 id="zernike-moments">zernike moments</h2>
+
+<p>Zernike polynomials are a sequence of polynomials that are orthogonal on the unit disk. There is a theorem that says any sufficiently smooth real-valued phase field over the unit disk can be represented in terms of its Zernike coefficients (odd and even), just as periodic functions find an orthogonal representation with the Fourier series.</p>
+
+<p><a href="http://murphylab.web.cmu.edu/publications/boland/boland_node25.html">Refer</a> - In order to convert a rectangular region of each image to a unit circle for calculation of Zernike moments -</p>
+
+<ul>
+  <li>First, the “center of fluorescence” (analogous to the center of mass) for each image was calculated and used to define the center of the pixel coordinate system.</li>
+  <li>Second, the x and y coordinates were divided by 150 (this corresponds to the size of an average cell at the magnification used in these experiments). Only pixels within the unit circle of the resulting normalized image, f(x,y), were used for subsequent calculations</li>
+</ul>
+
+<h3 id="mahotas-1">mahotas</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">inVector</span> <span class="o">=</span> <span class="n">mahotas</span><span class="p">.</span><span class="n">features</span><span class="p">.</span><span class="n">zernike_moments</span><span class="p">(</span><span class="n">testImg</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">allVectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">mahotas</span><span class="p">.</span><span class="n">features</span><span class="p">.</span><span class="n">zernike_moments</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">allImg</span><span class="p">]</span>
+
+<span class="n">nn</span><span class="p">,</span> <span class="n">distances</span> <span class="o">=</span> <span class="n">kNN</span><span class="p">(</span><span class="n">inVector</span><span class="p">,</span> <span class="n">allVectors</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">pyplots</span><span class="p">([</span><span class="n">testImg</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">allImg</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span>  <span class="ow">in</span> <span class="n">nn</span><span class="p">],</span> 
+        <span class="n">titles</span><span class="o">=</span><span class="p">[</span><span class="s">'Original'</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="s">'%d:%.2g'</span><span class="o">%</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">distance</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">nn</span><span class="p">,</span><span class="n">distances</span><span class="p">)])</span>
+</code></pre></div></div>
+
+<p><img src="/images/pershoot2/output_13_0.png" alt="_config.yml" /></p>
+
+<h2 id="hu-moments">hu moments</h2>
+
+<p>An image moment is a certain particular weighted average (moment) of the image pixels’ intensities.</p>
+
+<p>Hu Moments are typically used to describe properties of objects (and shaped) in the image after segmentation. They are not particulary relevant for describing texture. Just keeping them here for speed comparison.</p>
+
+<h3 id="skimage-1">skimage</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">hu_moments_sk</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">raw_m</span> <span class="o">=</span> <span class="n">skimage</span><span class="p">.</span><span class="n">measure</span><span class="p">.</span><span class="n">moments</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">cr</span> <span class="o">=</span> <span class="n">raw_m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">raw_m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">];</span> <span class="n">cc</span> <span class="o">=</span> <span class="n">raw_m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">raw_m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">central_m</span> <span class="o">=</span> <span class="n">skimage</span><span class="p">.</span><span class="n">measure</span><span class="p">.</span><span class="n">moments_central</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cr</span><span class="p">,</span> <span class="n">cc</span><span class="p">)</span>
+    <span class="n">norm_m</span> <span class="o">=</span> <span class="n">skimage</span><span class="p">.</span><span class="n">measure</span><span class="p">.</span><span class="n">moments_normalized</span><span class="p">(</span><span class="n">central_m</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">skimage</span><span class="p">.</span><span class="n">measure</span><span class="p">.</span><span class="n">moments_hu</span><span class="p">(</span><span class="n">norm_m</span><span class="p">)</span>
+
+<span class="n">inVector</span> <span class="o">=</span> <span class="n">hu_moments_sk</span><span class="p">(</span><span class="n">testImg</span><span class="p">)</span>
+<span class="n">allVectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">hu_moments_sk</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">allImg</span><span class="p">]</span>
+
+<span class="n">nn</span><span class="p">,</span> <span class="n">distances</span> <span class="o">=</span> <span class="n">kNN</span><span class="p">(</span><span class="n">inVector</span><span class="p">,</span> <span class="n">allVectors</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">pyplots</span><span class="p">([</span><span class="n">testImg</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">allImg</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span>  <span class="ow">in</span> <span class="n">nn</span><span class="p">],</span> 
+        <span class="n">titles</span><span class="o">=</span><span class="p">[</span><span class="s">'Original'</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="s">'%d:%.2g'</span><span class="o">%</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">distance</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">nn</span><span class="p">,</span><span class="n">distances</span><span class="p">)])</span>
+</code></pre></div></div>
+
+<p><img src="/images/pershoot2/output_16_0.png" alt="_config.yml" /></p>
+
+<h3 id="opencv">opencv</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">hu_moments_cv</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">moments</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cv2</span><span class="p">.</span><span class="n">HuMoments</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">inVector</span> <span class="o">=</span> <span class="n">hu_moments_cv</span><span class="p">(</span><span class="n">testImg</span><span class="p">)</span>
+<span class="n">allVectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">hu_moments_cv</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">allImg</span><span class="p">]</span>
+
+<span class="n">nn</span><span class="p">,</span> <span class="n">distances</span> <span class="o">=</span> <span class="n">kNN</span><span class="p">(</span><span class="n">inVector</span><span class="p">,</span> <span class="n">allVectors</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">pyplots</span><span class="p">([</span><span class="n">testImg</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">allImg</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span>  <span class="ow">in</span> <span class="n">nn</span><span class="p">],</span> 
+        <span class="n">titles</span><span class="o">=</span><span class="p">[</span><span class="s">'Original'</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="s">'%d:%.2g'</span><span class="o">%</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">distance</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">nn</span><span class="p">,</span><span class="n">distances</span><span class="p">)])</span>
+</code></pre></div></div>
+
+<p><img src="/images/pershoot2/output_18_0.png" alt="_config.yml" /></p>
+
+<h2 id="local-binary-patterns">local binary patterns</h2>
+
+<p>Developed in early 1990s, Local binary patterns (LBP) were commonly used for image classification before deep learning storm.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Local_binary_patterns">Ref</a> - In LBP, each image is divided into cells (say 16x16 pixels) and a histogram is computed for each cell as following</p>
+<ul>
+  <li>Compare the pixel in each cell to each of its 8 neighbors (on its left-top, left-middle, left-bottom, right-top, etc.). Follow the pixels along a circle, i.e. clockwise or counter-clockwise.</li>
+  <li>Where the center pixel’s value is greater than the neighbor’s value, write “0”. Otherwise, write “1”. This gives an 8-digit binary number (which is usually converted to decimal for convenience).</li>
+  <li>Compute the histogram, over the cell, of the frequency of each “number” occurring (i.e., each combination of which pixels are smaller and which are greater than the center). This histogram can be seen as a 256-dimensional feature vector.</li>
+  <li>Optionally normalize the histogram.</li>
+</ul>
+
+<p>Feature vector of an image is a concatenated version of these histograms</p>
+
+<h3 id="mahotas-2">mahotas</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">inVector</span> <span class="o">=</span> <span class="n">lbp_transform</span><span class="p">(</span><span class="n">testImg</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">allVectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">lbp_transform</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">allImg</span><span class="p">]</span>
+
+<span class="n">nn</span><span class="p">,</span> <span class="n">distances</span> <span class="o">=</span> <span class="n">kNN</span><span class="p">(</span><span class="n">inVector</span><span class="p">,</span> <span class="n">allVectors</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">pyplots</span><span class="p">([</span><span class="n">testImg</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">allImg</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span>  <span class="ow">in</span> <span class="n">nn</span><span class="p">],</span> 
+        <span class="n">titles</span><span class="o">=</span><span class="p">[</span><span class="s">'Original'</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="s">'%d:%.2f'</span><span class="o">%</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">distance</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">nn</span><span class="p">,</span><span class="n">distances</span><span class="p">)])</span>
+</code></pre></div></div>
+
+<p><img src="/images/pershoot2/output_21_0.png" alt="_config.yml" /></p>
+
+<h3 id="skimage-2">skimage</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">inVector</span> <span class="o">=</span> <span class="n">local_binary_pattern</span><span class="p">(</span><span class="n">testImg</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'uniform'</span><span class="p">)</span>
+<span class="n">allVectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">local_binary_pattern</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'uniform'</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">allImg</span><span class="p">]</span>
+
+<span class="n">nn</span><span class="p">,</span> <span class="n">distances</span> <span class="o">=</span> <span class="n">kNN</span><span class="p">(</span><span class="n">inVector</span><span class="p">,</span> <span class="n">allVectors</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">pyplots</span><span class="p">([</span><span class="n">testImg</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">allImg</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span>  <span class="ow">in</span> <span class="n">nn</span><span class="p">],</span> 
+        <span class="n">titles</span><span class="o">=</span><span class="p">[</span><span class="s">'Original'</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="s">'%d:%.2g'</span><span class="o">%</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">distance</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">nn</span><span class="p">,</span><span class="n">distances</span><span class="p">)])</span>
+</code></pre></div></div>
+
+<p><img src="/images/pershoot2/output_23_0.png" alt="_config.yml" /></p>
+
+<h2 id="mahotas-vs-skimage-vs-opencv">mahotas vs skimage vs opencv</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pre</span> <span class="o">=</span><span class="s">'''
+import os
+import numpy as np
+import cv2, mahotas, skimage, skimage.feature, skimage.measure
+from skimage.feature import local_binary_pattern
+from mahotas.features.lbp import lbp_transform
+
+ImagePath = 'brodatz/'
+images = os.listdir(ImagePath)
+testImg = mahotas.imresize(mahotas.imread(os.path.join(ImagePath,images[40])), (128,128)).astype(np.int32)
+testImg8 = testImg.astype(np.uint8)
+
+def haralick_sk(img):
+    g = skimage.feature.greycomatrix(img, range(4), np.pi/4*np.arange(4), levels=256, symmetric=True, normed=True)
+    return skimage.feature.greycoprops(g)
+    
+def hu_moments_sk(img):
+    raw_m = skimage.measure.moments(img)
+    cr = raw_m[0, 1] / raw_m[0, 0]; cc = raw_m[1, 0] / raw_m[0, 0]
+    central_m = skimage.measure.moments_central(img, cr, cc)
+    norm_m = skimage.measure.moments_normalized(central_m)
+    return skimage.measure.moments_hu(norm_m)
+    
+def hu_moments_cv(img):
+    m = cv2.moments(img)
+    return cv2.HuMoments(m)
+
+'''</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">t</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">timeit</span><span class="p">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">setup</span><span class="o">=</span><span class="n">pre</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">tests</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s">'haralick'</span><span class="p">,</span> <span class="p">[</span>
+        <span class="s">'mahotas.features.haralick(testImg)'</span><span class="p">,</span>
+        <span class="s">'haralick_sk(testImg)'</span><span class="p">,</span>
+        <span class="bp">None</span><span class="p">,</span>
+        <span class="p">]),</span>
+    <span class="p">(</span><span class="s">'zernike'</span><span class="p">,</span> <span class="p">[</span>
+        <span class="s">'mahotas.features.zernike_moments(testImg, radius=5)'</span><span class="p">,</span>
+        <span class="bp">None</span><span class="p">,</span>
+        <span class="bp">None</span><span class="p">,</span>
+        <span class="p">]),</span>
+    <span class="p">(</span><span class="s">'hu'</span><span class="p">,</span> <span class="p">[</span>
+        <span class="bp">None</span><span class="p">,</span>
+        <span class="s">'hu_moments_sk(testImg8)'</span><span class="p">,</span>
+        <span class="s">'hu_moments_cv(testImg8)'</span><span class="p">,</span>
+        <span class="p">]),</span>
+    <span class="p">(</span><span class="s">'lbp'</span><span class="p">,</span> <span class="p">[</span>
+        <span class="s">'lbp_transform(testImg, radius=3, points=24)'</span><span class="p">,</span>
+        <span class="s">'local_binary_pattern(testImg, 24, 3, "uniform")'</span><span class="p">,</span>
+        <span class="bp">None</span><span class="p">,</span>
+        <span class="p">]),</span>
+<span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">r'%-12s|%9s |%9s |%9s |'</span> <span class="o">%</span> <span class="p">(</span><span class="s">'Algorithm'</span><span class="p">,</span> <span class="s">'mahotas'</span><span class="p">,</span><span class="s">'skimage'</span><span class="p">,</span><span class="s">'opencv'</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span><span class="n">statements</span> <span class="ow">in</span> <span class="n">tests</span><span class="p">:</span>
+    <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">r'%-12s|'</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">statements</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">st</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'      NA |'</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">time</span> <span class="o">=</span> <span class="s">'%.4f'</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span><span class="p">(</span><span class="n">st</span><span class="p">))</span>
+            <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'%8s |'</span> <span class="o">%</span> <span class="n">time</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Algorithm   |  mahotas |  skimage |   opencv |
+haralick    |  0.1879 |  0.2082 |      NA |
+zernike     |  0.0093 |      NA |      NA |
+hu          |      NA |  0.0069 |  0.0003 |
+lbp         |  0.2269 |  0.1078 |      NA |
+</code></pre></div></div>
+
+<p>Here it is! While OpenCV is blazingly faster than other libraries, a lot of implementations seems missing (at least in the python API of OpenCV). <strong><code class="highlighter-rouge">skimage</code></strong> would be a good alternate with lot of algorithms ready to be played with</p>
+
+  </div>
+
+  <div class="date">
+    Written on May  8, 2015
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = 'kampta';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+<a href="mailto:kamalgupta308@gmail.com"><i class="svg-icon email"></i></a>
+<a href="https://www.facebook.com/kamalgupta09"><i class="svg-icon facebook"></i></a>
+<a href="https://www.flickr.com/kamalgupta09"><i class="svg-icon flickr"></i></a>
+<a href="https://github.com/kampta"><i class="svg-icon github"></i></a>
+<a href="https://instagram.com/kampta"><i class="svg-icon instagram"></i></a>
+<a href="https://www.linkedin.com/in/kamalgupta09"><i class="svg-icon linkedin"></i></a>
+
+
+<a href="https://www.twitter.com/kamalgupta09"><i class="svg-icon twitter"></i></a>
+<a href="http://stackoverflow.com/users/2353472/kampta"><i class="svg-icon stackoverflow"></i></a>
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-38633444-2', 'auto');
+		ga('send', 'pageview', {
+		  'page': '/Performance-Shootout-mahotas-vs-skimage-vs-opencv-part2/',
+		  'title': 'Performance shootout - python libraries for computer vision (Part 2/2)'
+		});
+	</script>
+	<!-- End Google Analytics -->
+
+
+  </body>
+</html>
