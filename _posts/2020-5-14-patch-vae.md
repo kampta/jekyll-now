@@ -57,10 +57,12 @@ video: nshuuEzc3kc
     <h1>Video</h1>
   </div>
   
-  <div class="entry">
-    {% youtube page.video%}
-  </div>
+  <div class="youtube" id="nshuuEzc3kc"></div>
   
+  <div class="entry">
+    {% youtube page.video %}
+  </div>
+    
    <div align="center">
     <h1>Cite</h1>
   </div>

@@ -17,10 +17,10 @@ In the past, I had fun building large-scale, commercial robotics and AI products
 
 I also briefly co-founded a startup helping users build and improve their wardrobe by bringing fast fashion recommendations from social networks.
 
-### [Research](http://kampta.github.io/research)
+### Research
 I primarily work in Machine Learning and its applications in Vision, Graphics, Language and Robotics. I am also interested in building products with real-world impact in health-care, finance, sports and transportation. Check out the [research page](http://kampta.github.io/research) for more.
 
-### [Blog](http://kampta.github.io/blog)
+### Blog
 This is **Y**et **A**nother **M**achine **L**earning blog written with an intention of
 
 * learning more by coding and writing. I strongly believe that the best way to learn a concept is to either code it myself or write a tutorial about it. This helps in both understanding various nuances associated with the concept as well as retain the concept for a longer time.
