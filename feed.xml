@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://kampta.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kampta.github.io/" rel="alternate" type="text/html" /><updated>2020-08-04T09:43:32-04:00</updated><id>https://kampta.github.io/feed.xml</id><title type="html">kampta</title><subtitle>Lernen durch Codierung</subtitle><entry><title type="html">PatchVAE - Learning Local Latent Codes for Recognition</title><link href="https://kampta.github.io/patch-vae/" rel="alternate" type="text/html" title="PatchVAE - Learning Local Latent Codes for Recognition" /><published>2020-05-14T00:00:00-04:00</published><updated>2020-05-14T00:00:00-04:00</updated><id>https://kampta.github.io/patch-vae</id><content type="html" xml:base="https://kampta.github.io/patch-vae/">&lt;div class=&quot;container&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://kampta.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kampta.github.io/" rel="alternate" type="text/html" /><updated>2020-08-04T10:11:18-04:00</updated><id>https://kampta.github.io/feed.xml</id><title type="html">kampta</title><subtitle>Lernen durch Codierung</subtitle><entry><title type="html">PatchVAE - Learning Local Latent Codes for Recognition</title><link href="https://kampta.github.io/patch-vae/" rel="alternate" type="text/html" title="PatchVAE - Learning Local Latent Codes for Recognition" /><published>2020-05-14T00:00:00-04:00</published><updated>2020-05-14T00:00:00-04:00</updated><id>https://kampta.github.io/patch-vae</id><content type="html" xml:base="https://kampta.github.io/patch-vae/">&lt;div class=&quot;container&quot;&gt;
   &lt;nav_justify&gt;
   &lt;a href=&quot;https://kampta.github.io&quot;&gt;Kamal Gupta&lt;span class=&quot;sup&quot;&gt;1&lt;/span&gt;&lt;/a&gt;
   &lt;a href=&quot;https://research.google/people/SaurabhSingh&quot;&gt;Saurabh Singh&lt;span class=&quot;sup&quot;&gt;2&lt;/span&gt;&lt;/a&gt;
@@ -46,7 +46,9 @@
     &lt;h1&gt;Video&lt;/h1&gt;
   &lt;/div&gt;
 
-&lt;div class=&quot;video&quot;&gt;&lt;figure&gt;&lt;iframe width=&quot;640&quot; height=&quot;480&quot; src=&quot;//www.youtube.com/embed/nshuuEzc3kc&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/figure&gt;&lt;/div&gt;
+&lt;div class=&quot;entry&quot;&gt;
+  &lt;iframe width=&quot;100%&quot; height=&quot;480&quot; src=&quot;https://www.youtube.com/embed/nshuuEzc3kc&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+  &lt;/div&gt;
 
 &lt;div align=&quot;center&quot;&gt;
     &lt;h1&gt;Cite&lt;/h1&gt;
