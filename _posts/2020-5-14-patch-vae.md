@@ -6,7 +6,6 @@ code: https://github.com/kampta/PatchVAE
 paper: https://arxiv.org/abs/2004.03623
 gif: patchvae/teaser.gif
 png: patchvae/teaser.png
-video: nshuuEzc3kc
 ---
 
   <div class="container">
@@ -57,7 +56,7 @@ video: nshuuEzc3kc
     <h1>Video</h1>
   </div>
   
-  <div class="youtube" id="nshuuEzc3kc"></div>
+  {% youtube nshuuEzc3kc %}
       
    <div align="center">
     <h1>Cite</h1>
