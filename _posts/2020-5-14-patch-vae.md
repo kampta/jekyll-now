@@ -25,7 +25,7 @@ png: patchvae/teaser.png
   <nav_justify>
   <a href="{{ page.code }}">[Code]</a>
   <a href="{{ page.paper }}">[arXiv]</a>
-  <a href="https://www.youtube.com/watch?v={{ page.video }}">[Video]</a>
+  <a href="https://www.youtube.com/watch?v=nshuuEzc3kc">[Video]</a>
   </nav_justify>
   </div>
 
