@@ -3,7 +3,10 @@ layout: project
 title: Improved Modeling of 3D Shapes with Multi-view Depth Maps
 excerpt: A simple and effective framework for modeling dense multi-view depth map representation 3D shapes
 code: https://github.com/kampta/multiview-shapes
+gif: multiview-shapes/TeaserMultiview.png
+png: multiview-shapes/TeaserMultiview.png
 paper: https://arxiv.org/abs/2009.03298
+conference: 3DV 2020
 ---
 
   <div class="container">
@@ -40,9 +43,7 @@ paper: https://arxiv.org/abs/2009.03298
     A simple and effective framework for modeling dense multi-view depth map representation 3D shapes
   </div>
 
-  <!--
-  <img src="/images/{{ page.png }}" alt="HTML5 Icon" style="float:left;margin-right:2em;margin-bottom:2em;">
-  -->
+  <img src="/images/{{ page.gif }}" alt="HTML5 Icon" style="float:left;margin-left:2em;margin-right:2em;margin-bottom:2em;">  
 
   <div align="center">
     <h1>Abstract</h1>
