@@ -3,7 +3,7 @@ layout: project
 title: Improved Modeling of 3D Shapes with Multi-view Depth Maps
 excerpt: A novel encoder-decoder generative model for 3D shapes using multi-view depth maps; SOTA results on single view reconstruction and generation
 code: https://github.com/kampta/multiview-shapes
-gif: multiview-shapes/teaser.gif
+gif: multiview-shapes/teaser_web.gif
 png: multiview-shapes/teaser.png
 paper: https://arxiv.org/abs/2009.03298
 conference: 3DV 2020
