@@ -1,10 +1,10 @@
 ---
 layout: project
 title: Improved Modeling of 3D Shapes with Multi-view Depth Maps
-excerpt: A simple and effective framework for modeling dense multi-view depth map representation 3D shapes
+excerpt: A novel encoder-decoder generative model for 3D shapes using multi-view depth maps; SOTA results on single view reconstruction and generation
 code: https://github.com/kampta/multiview-shapes
-gif: multiview-shapes/TeaserMultiview.png
-png: multiview-shapes/TeaserMultiview.png
+gif: multiview-shapes/teaser.gif
+png: multiview-shapes/teaser.png
 paper: https://arxiv.org/abs/2009.03298
 conference: 3DV 2020
 ---
@@ -33,17 +33,17 @@ conference: 3DV 2020
   <nav_justify>
   <a href="{{ page.code }}">[Code]</a>
   <a href="{{ page.paper }}">[arXiv]</a>
-  <a href="https://www.youtube.com/watch?v=">[Video]</a>
+  <a href="https://www.youtube.com/watch?v=dxZfornP_OY">[Video]</a>
   </nav_justify>
   </div>
 
   <br/>
 
   <div align="justify">
-    A simple and effective framework for modeling dense multi-view depth map representation 3D shapes
+    A novel encoder-decoder generative model for 3D shapes using multi-view depth maps; SOTA results on single view reconstruction and generation.
   </div>
 
-  <img src="/images/{{ page.gif }}" alt="HTML5 Icon" style="float:left;margin-left:2em;margin-right:2em;margin-bottom:2em;">  
+  <img src="/images/{{ page.png }}" alt="HTML5 Icon" style="float:left;margin-left:2em;margin-right:2em;margin-bottom:2em;">  
 
   <div align="center">
     <h1>Abstract</h1>
@@ -59,6 +59,13 @@ conference: 3DV 2020
     Our quantitative evaluations show that our method is superior to existing depth map methods for reconstructing and synthesizing 3D objects and is competitive with other representations, such as point clouds, voxel grids, and implicit functions.
   </div>
 
+  <div align="center">
+    <h1>Video</h1>
+  </div>
+  
+  <div class="entry" align="center">
+  {% include youtube.html id="dxZfornP_OY" %}
+  </div>
   
    <div align="center">
     <h1>Cite</h1>
