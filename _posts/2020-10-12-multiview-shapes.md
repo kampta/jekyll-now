@@ -77,6 +77,6 @@ conference: 3DV 2020
   author={Gupta, Kamal and Jabbireddy, Susmija and Shah, Ketul and Shrivastava, Abhinav and Zwicker, Matthias},
   booktitle={International Conference on 3D Vision},
   year={2020},
-  url={http://shapes.umiacs.io},
+  url={http://multiview-shapes.umiacs.io},
 }
 ```
