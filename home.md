@@ -4,18 +4,6 @@ title:
 permalink: /about/
 ---
 
-I am a Ph.D. candidate in the Department of [Computer Science](https://www.cs.umd.edu) at [University of Maryland College Park](https://www.umd.edu). I am working with [Larry Davis](http://users.umiacs.umd.edu/~lsd/) and [Abhinav Shrivastava](http://abhinavsh.info).
-In the past, I had fun building large-scale, commercial robotics and AI products in both industry and academia, specifically
-
-* Amazon [AWS Rekognition](https://aws.amazon.com/rekognition/) in Pasadena, CA
-* A self-driving startup [Netradyne](http://netradyne.com/) in Bengaluru, India
-* American Express Big Data Labs (Now [Amex AI Labs](https://www.americanexpress.com/in/careers/ai-labs.html)) in Bengaluru, India
-* National ICT Australia (or NICTA, now [Data 61](https://data61.csiro.au/)) in Sydney, Australia
-* [Robotics Institute](https://frc.ri.cmu.edu), CMU (with [S. Singh](https://frc.ri.cmu.edu/~ssingh/Sanjiv_Singh/home.html), [S. Narasimhan](http://www.cs.cmu.edu/~srinivas/), [S. Nuske](https://www.linkedin.com/in/stephen-nuske-7ab4842/)) in Pittsburgh, PA
-* [Industrial Technology Research Institute](https://www.itri.org.tw/english/) in Taiwan
-* [IIT Delhi](https://home.iitd.ac.in/) (with [M. Varma](https://www.microsoft.com/en-us/research/people/manik/), [SVN Vishwanathan](https://www.stat.purdue.edu/~vishy/), [S. Chaudhury](http://web.iitd.ac.in/~santanuc/)) in New Delhi, India
-
-I also briefly co-founded a startup helping users design their wardrobe by bringing fast fashion recommendations from social networks.
 
 [Email](kamalgupta308@gmail.com) &nbsp;&nbsp;/&nbsp;&nbsp;
 [Google Scholar](https://scholar.google.com/citations?user=tC3td8cAAAAJ&hl=en) &nbsp;&nbsp;/&nbsp;&nbsp;
@@ -23,9 +11,50 @@ I also briefly co-founded a startup helping users design their wardrobe by bring
 [Twitter](https://twitter.com/kamalgupta09) &nbsp;&nbsp;/&nbsp;&nbsp;
 [LinkedIn](https://www.linkedin.com/in/kamalgupta09/)
 
-# Research
-I primarily work in Machine Learning and its applications in Vision, Graphics, Language and Robotics. I am also interested in building products with real-world impact in health-care, finance, sports and transportation.
-Some of my published works are
+[comment]: <> (I am a Ph.D. candidate in the Department of [Computer Science]&#40;https://www.cs.umd.edu&#41; at [University of Maryland College Park]&#40;https://www.umd.edu&#41;. I am working with [Larry Davis]&#40;http://users.umiacs.umd.edu/~lsd/&#41; and [Abhinav Shrivastava]&#40;http://abhinavsh.info&#41;.)
+
+[comment]: <> (In the past, I had fun building large-scale, commercial robotics and AI products in both industry and academia, specifically)
+
+[comment]: <> (* Amazon [AWS Rekognition]&#40;https://aws.amazon.com/rekognition/&#41; in Pasadena, CA)
+
+[comment]: <> (* A self-driving startup [Netradyne]&#40;http://netradyne.com/&#41; in Bengaluru, India)
+
+[comment]: <> (* American Express Big Data Labs &#40;Now [Amex AI Labs]&#40;https://www.americanexpress.com/in/careers/ai-labs.html&#41;&#41; in Bengaluru, India)
+
+[comment]: <> (* National ICT Australia &#40;or NICTA, now [Data 61]&#40;https://data61.csiro.au/&#41;&#41; in Sydney, Australia)
+
+[comment]: <> (* [Robotics Institute]&#40;https://frc.ri.cmu.edu&#41;, CMU &#40;with [S. Singh]&#40;https://frc.ri.cmu.edu/~ssingh/Sanjiv_Singh/home.html&#41;, [S. Narasimhan]&#40;http://www.cs.cmu.edu/~srinivas/&#41;, [S. Nuske]&#40;https://www.linkedin.com/in/stephen-nuske-7ab4842/&#41;&#41; in Pittsburgh, PA)
+
+[comment]: <> (* [Industrial Technology Research Institute]&#40;https://www.itri.org.tw/english/&#41; in Taiwan)
+
+[comment]: <> (* [IIT Delhi]&#40;https://home.iitd.ac.in/&#41; &#40;with [M. Varma]&#40;https://www.microsoft.com/en-us/research/people/manik/&#41;, [SVN Vishwanathan]&#40;https://www.stat.purdue.edu/~vishy/&#41;, [S. Chaudhury]&#40;http://web.iitd.ac.in/~santanuc/&#41;&#41; in New Delhi, India)
+
+[comment]: <> (I also briefly co-founded a startup helping users design their wardrobe by bringing fast fashion recommendations from social networks.)
+
+I am a Ph.D. candidate in the Department of <a href="https://www.cs.umd.edu/">Computer Science</a> at 
+<a href="https://www.umd.edu/">University of Maryland College Park</a> where I work with 
+<a href="http://users.umiacs.umd.edu/~lsd">Larry Davis</a> 
+and <a href="https://www.cs.umd.edu/~abhinav">Abhinav Shrivastava</a>. 
+
+My research interests lie at the intersection of Computer Vision, Graphics, and Machine Learning. 
+My long term goal is to enable storytellers to create intricate 3D visual content seamlessly.
+
+[comment]: <> (I am a recipient of the Kulkarni fellowship and Dean's fellowship at the University of Maryland.)
+In the past, I had fun building large-scale, commercial robotics and AI products in industries 
+(<a href="https://github.com/NVlabs">NVIDIA</a>, 
+<a href="https://www.amazon.science/">Amazon</a>, 
+<a href="http://netradyne.com/">Netradyne</a>, 
+<a href="https://www.americanexpress.com/in/careers/ai-labs.html">American Express</a>), 
+research labs (<a href="https://data61.csiro.au">NICTA</a>, 
+<a href="https://www.itri.org.tw/english">ITRI</a>) and academia (<a href="https://frc.ri.cmu.edu/">Carnegie Mellon</a>, 
+<a href="https://home.iitd.ac.in">IIT Delhi</a>).
+I also co-founded a startup helping users design their outfits by bringing the latest fashion recommendations from social networks.
+
+## Research Projects
+
+[comment]: <> (I primarily work in Machine Learning and its applications in Vision, Graphics, Language and Robotics. I am also interested in building products with real-world impact in health-care, finance, sports and transportation.)
+
+[comment]: <> (Some of my published works are)
 
 <div class="posts">
   {% for post in site.posts %}
