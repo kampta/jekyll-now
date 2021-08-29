@@ -5,11 +5,15 @@ permalink: /about/
 ---
 
 
-[Email](kamalgupta308@gmail.com) &nbsp;&nbsp;/&nbsp;&nbsp;
-[Google Scholar](https://scholar.google.com/citations?user=tC3td8cAAAAJ&hl=en) &nbsp;&nbsp;/&nbsp;&nbsp;
-[Github](https://github.com/kampta) &nbsp;&nbsp;/&nbsp;&nbsp;
-[Twitter](https://twitter.com/kamalgupta09) &nbsp;&nbsp;/&nbsp;&nbsp;
-[LinkedIn](https://www.linkedin.com/in/kamalgupta09/)
+[comment]: <> ([Email]&#40;kamalgupta308@gmail.com&#41; &nbsp;&nbsp;/&nbsp;&nbsp;)
+
+[comment]: <> ([Google Scholar]&#40;https://scholar.google.com/citations?user=tC3td8cAAAAJ&hl=en&#41; &nbsp;&nbsp;/&nbsp;&nbsp;)
+
+[comment]: <> ([Github]&#40;https://github.com/kampta&#41; &nbsp;&nbsp;/&nbsp;&nbsp;)
+
+[comment]: <> ([Twitter]&#40;https://twitter.com/kamalgupta09&#41; &nbsp;&nbsp;/&nbsp;&nbsp;)
+
+[comment]: <> ([LinkedIn]&#40;https://www.linkedin.com/in/kamalgupta09/&#41;)
 
 [comment]: <> (I am a Ph.D. candidate in the Department of [Computer Science]&#40;https://www.cs.umd.edu&#41; at [University of Maryland College Park]&#40;https://www.umd.edu&#41;. I am working with [Larry Davis]&#40;http://users.umiacs.umd.edu/~lsd/&#41; and [Abhinav Shrivastava]&#40;http://abhinavsh.info&#41;.)
 
@@ -49,6 +53,14 @@ research labs (<a href="https://data61.csiro.au">NICTA</a>,
 <a href="https://www.itri.org.tw/english">ITRI</a>) and academia (<a href="https://frc.ri.cmu.edu/">Carnegie Mellon</a>, 
 <a href="https://home.iitd.ac.in">IIT Delhi</a>).
 I also co-founded a startup helping users design their outfits by bringing the latest fashion recommendations from social networks.
+
+## Recent News
+
+* July 2021: [LayoutTransformer](https://arxiv.org/abs/2006.14615) accepted to ICCV 2021
+* May 2021: Started an internship at NVIDIA AI
+* Feb. 2021: [LTH for Object Recognition](https://openaccess.thecvf.com/content/CVPR2021/html/Girish_The_Lottery_Ticket_Hypothesis_for_Object_Recognition_CVPR_2021_paper.html) accepted to CVPR 2021
+* Oct. 2020: [Multiview Shapes](https://ieeexplore.ieee.org/abstract/document/9320100) accepted to 3DV 2020
+* May 2020: Awarded [Kulkarni Fellowship](https://gradschool.umd.edu/funding/student-fellowships-awards/kulkarni-foundation-summer-research-fellowship)
 
 ## Research Projects
 

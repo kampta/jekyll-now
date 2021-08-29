@@ -310,11 +310,18 @@ nav_justify {
   background-color: $lightGray;
 }
 
+.wrapper-header {
+  margin-top: -30px;
+  margin-bottom: -10px;
+  //border-top: 1px solid #ddd;
+  //border-bottom: 1px solid #ddd;
+  //background-color: $lightGray;
+}
+
 footer {
   padding: 20px 0;
   text-align: center;
 }
-
 
 .sup {
     position: relative;
