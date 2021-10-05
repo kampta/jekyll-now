@@ -55,12 +55,13 @@ research labs (<a href="https://data61.csiro.au">NICTA</a>,
 I also co-founded a startup helping users design their outfits by bringing the latest fashion recommendations from social networks.
 
 ## Recent News
-
+* Sep. 2021: [PatchGame](https://kampta.github.io/pubs/NeurIPS2021_PatchGame.pdf) accepted to NeurIPS 2021
 * July 2021: [LayoutTransformer](https://arxiv.org/abs/2006.14615) accepted to ICCV 2021
-* May 2021: Started an internship at NVIDIA AI
+* May 2021: Started an internship at NVIDIA AI with [Dave Luebke](https://luebke.us)'s team
 * Feb. 2021: [LTH for Object Recognition](https://openaccess.thecvf.com/content/CVPR2021/html/Girish_The_Lottery_Ticket_Hypothesis_for_Object_Recognition_CVPR_2021_paper.html) accepted to CVPR 2021
 * Oct. 2020: [Multiview Shapes](https://ieeexplore.ieee.org/abstract/document/9320100) accepted to 3DV 2020
 * May 2020: Awarded [Kulkarni Fellowship](https://gradschool.umd.edu/funding/student-fellowships-awards/kulkarni-foundation-summer-research-fellowship)
+* Feb. 2020: [PatchVAE](https://arxiv.org/abs/2004.03623) accepted to CVPR 2020
 
 ## Research Projects
 

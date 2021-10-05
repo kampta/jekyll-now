@@ -1,32 +1,31 @@
 ---
 layout: project
-title: Layout Generation and Completion with Self-attention
-excerpt: A simple robust generative model for layouts; results on diverse real world datasets (3D objects, image, document layouts, mobile app wireframes)
-code: https://github.com/kampta/DeepLayout
-paper: https://arxiv.org/abs/2006.14615
-gif: layout/layout_teasor.jpg
-conference: ICCV 2021
+title: PatchGame - Learning to Signal Mid-level Patches in Referential Games
+excerpt: Emergent communication via mid-level patches in a referential game played on a large-scale image dataset
+code: https://github.com/kampta/PatchGame
+paper: https://kampta.github.io/pubs/NeurIPS2021_PatchGame.pdf
+gif: patch_game.jpg
+conference: NeurIPS 2021
 ---
 
   <div class="container">
   <nav_justify>
-  <a href="https://kampta.github.io">Kamal Gupta<span class="sup">1</span></a>
-  <a href="">Justin Lazarow<span class="sup">2</span></a>
-  <a href="">Alessandro Achille<span class="sup">2</span></a>
+  <a href="https://kampta.github.io">Kamal Gupta</a>
+  <a href="https://somepago.github.io">Gowthami Somepalli</a>
+  <a href="">Anubhav Gupta</a>
   </nav_justify>
   </div>
   
   <div class="container" align="justify">
   <nav_justify>
-  <a href="">Larry Davis<span class="sup">1,2</span></a>
-  <a href="">Vijay Mahadevan<span class="sup">2</span></a>
-  <a href="">Abhinav Shrivastava<span class="sup">1</span></a>
+  <a href="https://vinojjayasundara.github.io/">Vinoj Jayasundara</a>
+  <a href="http://www.cs.umd.edu/~zwicker/">Matthias Zwicker</a>
+  <a href="https://www.cs.umd.edu/~abhinav">Abhinav Shrivastava</a>
   </nav_justify>
   </div>
   
   <div class="container" align="center">
-  <p><span class="sup">1</span>University of Maryland, College Park</p>
-  <p><span class="sup">2</span>Amazon AWS</p>
+  <p>University of Maryland, College Park</p>
   </div>
   
   <div class="container">
@@ -46,16 +45,12 @@ conference: ICCV 2021
   </div>
 
   <div align="justify">
-    We address the problem of layout generation for diverse domains such as images, documents, and mobile applications.
-    A layout is a set of graphical elements, belonging to one or more categories, placed together in a meaningful way.
-    Generating a new layout or extending an existing layout requires understanding the relationships between these graphical elements.
-    To do this, we propose a novel framework, LayoutTransformer, that leverages a self-attention based approach to learn contextual relationships between layout elements and generate layouts in a given domain.
-    The proposed model improves upon the state-of-the-art approaches in layout generation in four ways.
-    First, our model can generate a new layout either from an empty set or add more elements to a partial layout starting from an initial set of elements.
-    Second, as the approach is attention-based, we can visualize which previous elements the model is attending to predict the next element, thereby providing an interpretable sequence of layout elements.
-    Third, our model can easily scale to support both a large number of element categories and a large number of elements per layout. 
-    Finally, the model also produces an embedding for various element categories, which can be used to explore the relationships between the categories.
-    We demonstrate with experiments that our model can produce meaningful layouts in diverse settings such as object bounding boxes in scenes (COCO bounding boxes), documents (PubLayNet), and mobile applications (RICO dataset).
+    We study a referential game (a type of signaling game) where two agents communicate with each other via a discrete bottleneck to achieve a common goal. 
+    In our referential game, the goal of the speaker is to compose a message or a symbolic representation of “important” image patches,
+    while the task for the listener is to match the speaker’s message to a different view of the same image. 
+    We show that it is indeed possible for the two agents to develop a communication protocol without explicit supervision.
+    We further investigate the developed protocol and show the applications in speeding up recent Vision Transformers by 
+    using only important patches, and as pre-training for downstream recognition tasks (e.g., classification).
   </div>
 
   
@@ -64,10 +59,10 @@ conference: ICCV 2021
   </div>
   
 ```
-@inproceedings{gupta2020improved,
-  title={Layout Generation and Completion with Self-attention},
-  author={Gupta, Kamal and Achille, Alessandro and Lazarow, Justin and Davis, Larry and Mahadevan, Vijay and Shrivastava, Abhinav},
-  journal={arXiv preprint arXiv:2006.14615},
-  year={2020}
+@inproceedings{gupta2021patchgame,
+  title={PatchGame: Learning to Signal Mid-level Patches in Referential Games},
+  author={Gupta, Kamal and Somepalli, Gowthami and Gupta, Anubhav and Jayasundara, Vinoj and Zwicker, Matthias and Shrivastava, Abhinav},
+  journal={Advances in Neural Information Processing Systems},
+  year={2021}
 }
 ```
