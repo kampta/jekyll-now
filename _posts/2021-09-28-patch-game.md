@@ -6,6 +6,7 @@ code: https://github.com/kampta/PatchGame
 paper: https://kampta.github.io/pubs/NeurIPS2021_PatchGame.pdf
 gif: patch_game.jpg
 conference: NeurIPS 2021
+authors: K. Gupta, G. Somepalli, A. Gupta, V. Jayasundara, M. Zwicker, A. Shrivastava
 ---
 
   <div class="container">

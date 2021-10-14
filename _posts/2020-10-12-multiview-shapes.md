@@ -7,6 +7,7 @@ gif: multiview-shapes/teaser_web.gif
 png: multiview-shapes/teaser.png
 paper: https://arxiv.org/abs/2009.03298
 conference: 3DV 2020
+authors: K. Gupta, S. Jabbireddy, K. Shah, A. Shrivastava, M. Zwicker
 ---
 
   <div class="container">

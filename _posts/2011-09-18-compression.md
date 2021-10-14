@@ -7,6 +7,7 @@ paper: http://www.iapr-tc11.org/archive/icdar2011/fileup/PDF/4520b115.pdf
 gif: compression.jpg
 png: compression.jpg
 conference: ICDAR 2011
+authors: K. Gupta, M. Bansal, S. Chaudhury
 ---
 
   <div class="container">

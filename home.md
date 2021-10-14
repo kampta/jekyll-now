@@ -76,8 +76,8 @@ I also co-founded a startup helping users design their outfits by bringing the l
 
       <img src="/images/{{ post.gif }}" alt="HTML5 Icon" style="width:180px;height:180px;float:left;margin-right:2em;">
 
-      <h3><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a> </h3>
-      <i>{{ post.conference}}</i>
+      <p><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }} </a> ({{ post.conference}}) </p>
+      <auth>{{ post.authors }} </auth>
 
       <div class="entry">
         {{ post.excerpt }}
@@ -92,7 +92,7 @@ I also co-founded a startup helping users design their outfits by bringing the l
 </div>
 
 # Blog
-This is **Y**et **A**nother **M**achine **L**earning blog written with an intention of
+**Y**et **A**nother **M**achine **L**earning blog written with an intention of
 
 * learning more by coding and writing. I strongly believe that the best way to learn a concept is to either code it myself or write a tutorial about it. This helps in both understanding various nuances associated with the concept as well as retain the concept for a longer time.
 * keeping notes of various lectures/articles/papers/books/ideas I (have) come across. 
