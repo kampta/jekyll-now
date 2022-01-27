@@ -55,8 +55,8 @@ research labs (<a href="https://data61.csiro.au">NICTA</a>,
 I also co-founded a startup helping users design their outfits by bringing the latest fashion recommendations from social networks.
 
 ## Recent News
-* Jan. 2022: Outstanding Graduate Assistant Award by the Graduate School, University of Maryland College Park
-* Sep. 2021: [PatchGame[](https://kampta.github.io/pubs/NeurIPS2021_PatchGame.pdf) accepted to NeurIPS 2021
+* Jan. 2022: Outstanding Graduate Assistant [Award](https://www.gradschool.umd.edu/funding/student-fellowships-awards/outstanding-graduate-assistant-awards) by the Graduate School, UMD
+* Sep. 2021: [PatchGame](https://kampta.github.io/pubs/NeurIPS2021_PatchGame.pdf) accepted to NeurIPS 2021
 * July 2021: [LayoutTransformer](https://arxiv.org/abs/2006.14615) accepted to ICCV 2021
 * May 2021: Started an internship at NVIDIA AI with [Dave Luebke](https://luebke.us)'s team
 * Feb. 2021: [LTH for Object Recognition](https://openaccess.thecvf.com/content/CVPR2021/html/Girish_The_Lottery_Ticket_Hypothesis_for_Object_Recognition_CVPR_2021_paper.html) accepted to CVPR 2021
