@@ -33,7 +33,7 @@ authors: K. Gupta, G. Somepalli, A. Gupta, V. Jayasundara, M. Zwicker, A. Shriva
   <nav_justify>
   <a href="{{ page.code }}">[Code]</a>
   <a href="{{ page.paper }}">[arXiv]</a>
-  <a href="https://www.youtube.com/watch?v=">[Video]</a>
+  <a href="https://slideslive.com/38968424">[Video]</a>
   </nav_justify>
   </div>
 
