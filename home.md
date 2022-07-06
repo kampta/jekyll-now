@@ -56,6 +56,7 @@ I also co-founded a startup helping users design their outfits by bringing the l
 
 ## Recent News
 * May 2022: Started an internship with Google AR and Google Research
+* Apr. 2022: Outstanding Reviewer [Award](https://cvpr2022.thecvf.com/outstanding-reviewers) at CVPR 2022
 * Jan. 2022: Outstanding Graduate Assistant [Award](https://www.gradschool.umd.edu/funding/student-fellowships-awards/outstanding-graduate-assistant-awards) by the Graduate School, UMD
 * Sep. 2021: [PatchGame](https://kampta.github.io/pubs/NeurIPS2021_PatchGame.pdf) accepted to NeurIPS 2021
 * July 2021: [LayoutTransformer](https://arxiv.org/abs/2006.14615) accepted to ICCV 2021
