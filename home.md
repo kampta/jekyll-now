@@ -55,7 +55,7 @@ research labs (<a href="https://data61.csiro.au">NICTA</a>,
 I also co-founded a startup helping users design their outfits by bringing the latest fashion recommendations from social networks.
 
 ## Recent News
-* Jul. 2022: [Neural Space-filling Curves](https://arxiv.org/abs/2204.08453) accepted to ECCV 2022
+* July 2022: [Neural Space-filling Curves](https://arxiv.org/abs/2204.08453) accepted to ECCV 2022
 * May 2022: Started an internship with Google AR and Google Research
 * Apr. 2022: Outstanding Reviewer [Award](https://cvpr2022.thecvf.com/outstanding-reviewers) at CVPR 2022
 * Jan. 2022: Outstanding Graduate Assistant [Award](https://www.gradschool.umd.edu/funding/student-fellowships-awards/outstanding-graduate-assistant-awards) by the Graduate School, UMD
