@@ -41,18 +41,18 @@ I am a Ph.D. candidate in the Department of <a href="https://www.cs.umd.edu/">Co
 and <a href="https://www.cs.umd.edu/~abhinav">Abhinav Shrivastava</a>. 
 
 My research interests lie at the intersection of Computer Vision, Graphics, and Machine Learning. 
-My long term goal is to enable storytellers to create intricate 3D visual content seamlessly.
+My long term goal is to learn from Internet-scale data and enable storytellers to create intricate 3D visual content seamlessly.
 
 [comment]: <> (I am a recipient of the Kulkarni fellowship and Dean's fellowship at the University of Maryland.)
-In the past, I had fun building large-scale, commercial robotics and AI products in industries 
+In the past, I had fun prototyping and scaling Vision and ML products in both industry 
 (<a href="https://github.com/NVlabs">NVIDIA</a>, 
 <a href="https://www.amazon.science/">Amazon</a>, 
 <a href="http://netradyne.com/">Netradyne</a>, 
 <a href="https://www.americanexpress.com/in/careers/ai-labs.html">American Express</a>), 
-research labs (<a href="https://data61.csiro.au">NICTA</a>, 
-<a href="https://www.itri.org.tw/english">ITRI</a>) and academia (<a href="https://frc.ri.cmu.edu/">Carnegie Mellon</a>, 
+and academia (<a href="https://data61.csiro.au">NICTA</a>, 
+<a href="https://www.itri.org.tw/english">ITRI</a>, <a href="https://frc.ri.cmu.edu/">Carnegie Mellon</a>, 
 <a href="https://home.iitd.ac.in">IIT Delhi</a>).
-I also co-founded a startup helping users design their outfits by bringing the latest fashion recommendations from social networks.
+I also co-founded a startup helping users design their wardrobes by "learning" a fashion knowledge graph from social network data.
 
 ## Recent News
 * July 2022: [Neural Space-filling Curves](https://arxiv.org/abs/2204.08453) accepted to ECCV 2022
