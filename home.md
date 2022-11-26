@@ -35,19 +35,17 @@ permalink: /about/
 
 [comment]: <> (I also briefly co-founded a startup helping users design their wardrobe by bringing fast fashion recommendations from social networks.)
 
-I am a Ph.D. candidate in the Department of <a href="https://www.cs.umd.edu/">Computer Science</a> at 
+I am a fifth year Ph.D. candidate in the Department of <a href="https://www.cs.umd.edu/">Computer Science</a> at 
 <a href="https://www.umd.edu/">University of Maryland College Park</a> where I work with 
 <a href="http://users.umiacs.umd.edu/~lsd">Larry Davis</a> 
-and <a href="https://www.cs.umd.edu/~abhinav">Abhinav Shrivastava</a>. 
+and <a href="https://www.cs.umd.edu/~abhinav">Abhinav Shrivastava</a>. I also interned at <a href="https://www.google.com/">Google</a>, <a href="https://github.com/NVlabs">NVIDIA</a>, and <a href="https://www.amazon.science/">Amazon</a>.
 
 My research interests lie at the intersection of Computer Vision, Graphics, and Machine Learning. 
 My long term goal is to learn from Internet-scale data and enable storytellers to create intricate 3D visual content seamlessly.
 
 [comment]: <> (I am a recipient of the Kulkarni fellowship and Dean's fellowship at the University of Maryland.)
-In the past, I had fun prototyping and scaling Vision and ML products in both industry 
-(<a href="https://github.com/NVlabs">NVIDIA</a>, 
-<a href="https://www.amazon.science/">Amazon</a>, 
-<a href="http://netradyne.com/">Netradyne</a>, 
+Before starting my Ph. D., I spent 5 years prototyping and scaling Vision and ML products in both industry 
+(<a href="http://netradyne.com/">Netradyne</a>, 
 <a href="https://www.americanexpress.com/in/careers/ai-labs.html">American Express</a>), 
 and academia (<a href="https://data61.csiro.au">NICTA</a>, 
 <a href="https://www.itri.org.tw/english">ITRI</a>, <a href="https://frc.ri.cmu.edu/">Carnegie Mellon</a>, 
@@ -55,14 +53,15 @@ and academia (<a href="https://data61.csiro.au">NICTA</a>,
 I also co-founded a startup helping users design their wardrobes by "learning" a fashion knowledge graph from social network data.
 
 ## Recent News
-* July 2022: [Neural Space-filling Curves](https://arxiv.org/abs/2204.08453) accepted to ECCV 2022
+* July 2022: [Neural Space-filling Curves](https://hywang66.github.io/publication/neuralsfc) accepted to ECCV 2022
+* July 2022: Attended International Computer Vision Summer School, [ICVSS 2022](https://iplab.dmi.unict.it/icvss2022/)
 * May 2022: Started an internship with Google AR and Google Research
 * Apr. 2022: Outstanding Reviewer [Award](https://cvpr2022.thecvf.com/outstanding-reviewers) at CVPR 2022
 * Jan. 2022: Outstanding Graduate Assistant [Award](https://www.gradschool.umd.edu/funding/student-fellowships-awards/outstanding-graduate-assistant-awards) by the Graduate School, UMD
 * Sep. 2021: [PatchGame](https://arxiv.org/abs/2111.01785) accepted to NeurIPS 2021
 * July 2021: [LayoutTransformer](https://arxiv.org/abs/2006.14615) accepted to ICCV 2021
 * May 2021: Started an internship at NVIDIA AI
-* Feb. 2021: [LTH for Object Recognition](https://openaccess.thecvf.com/content/CVPR2021/html/Girish_The_Lottery_Ticket_Hypothesis_for_Object_Recognition_CVPR_2021_paper.html) accepted to CVPR 2021
+* Feb. 2021: [LTH for Object Recognition](https://lth-recognition.github.io/) accepted to CVPR 2021
 * Oct. 2020: [Multiview Shapes](https://ieeexplore.ieee.org/abstract/document/9320100) accepted to 3DV 2020
 * May 2020: Awarded [Kulkarni Fellowship](https://gradschool.umd.edu/funding/student-fellowships-awards/kulkarni-foundation-summer-research-fellowship)
 * Feb. 2020: [PatchVAE](https://arxiv.org/abs/2004.03623) accepted to CVPR 2020
@@ -76,21 +75,46 @@ I also co-founded a startup helping users design their wardrobes by "learning" a
 <div class="posts">
   {% for post in site.posts %}
     {% if post.layout == "project" %}
-    <article class="post">
+      <article class="post">
 
-      <img src="/images/{{ post.gif }}" alt="HTML5 Icon" style="width:180px;height:180px;float:left;margin-right:2em;">
+        <img src="/images/{{ post.gif }}" alt="HTML5 Icon" style="width:180px;height:180px;float:left;margin-right:2em;">
 
-      <p><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }} </a> ({{ post.conference}}) </p>
-      <auth>{{ post.authors }} </auth>
+        <p><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }} </a> ({{ post.conference}}) </p>
+        <auth>{{ post.authors }} </auth>
 
-      <div class="entry">
-        {{ post.excerpt }}
-      </div>
+        <div class="entry">
+          {{ post.excerpt }}
+        </div>
 
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Web</a> &nbsp;/&nbsp;
-      <a href="{{ post.code }}" class="read-more">Code</a> &nbsp;/&nbsp;&nbsp;
-      <a href="{{ post.paper }}" class="read-more">Paper</a>
-    </article>
+        <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Web</a> &nbsp;/&nbsp;
+        <a href="{{ post.code }}" class="read-more">Code</a> &nbsp;/&nbsp;&nbsp;
+        {% if post.paper contains "arxiv" %}
+        <a href="{{ post.paper }}" class="read-more">arXiv</a>
+        {% else %}
+        <a href="{{ post.paper }}" class="read-more">Paper</a>
+        {% endif %}
+      </article>
+
+    {% elsif post.layout == "projectlink" %}
+      <article class="post">
+
+        <img src="/images/{{ post.gif }}" alt="HTML5 Icon" style="width:180px;height:180px;float:left;margin-right:2em;">
+
+        <p><a href="{{ post.link }}">{{ post.title }} </a> ({{ post.conference}}) </p>
+        <auth>{{ post.authors }} </auth>
+
+        <div class="entry">
+          {{ post.excerpt }}
+        </div>
+
+        <a href="{{ post.link }}" class="read-more">Web</a> &nbsp;/&nbsp;
+        <a href="{{ post.code }}" class="read-more">Code</a> &nbsp;/&nbsp;&nbsp;
+        {% if post.paper contains "arxiv" %}
+        <a href="{{ post.paper }}" class="read-more">arXiv</a>
+        {% else %}
+        <a href="{{ post.paper }}" class="read-more">Paper</a>
+        {% endif %}
+      </article>
     {% endif %}
   {% endfor %}
 </div>
