@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Parallel processing in python
-excerpt: I stopped using Python's multiprocessing module for quite some time now. But decided to blog about it only recently (not because a blog post has been long due, but because pathos definitely deserves one).
+excerpt: I stopped using Python's multiprocessing module for quite some time now. But decided to blog about it only recently (not because a blog post has been long due, but because pathos definitely deserves one)
 ---
 
 I stopped using Python's ```multiprocessing``` module for quite some time now. But decided to blog about it only recently (not because a blog post has been long due, but because ```pathos``` definitely deserves one).

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: How to use GPU based Virtual Machines on Azure!
-excerpt: Microsoft recently (August 4, 2016) announced their Azure N-Series Virtual Machines. I was at the time evaluating options to serve deep learning models on GPUs and decided to give it a try. It was actually pretty straightforward.
+excerpt: Microsoft recently (August 4, 2016) announced their Azure N-Series Virtual Machines. I was at the time evaluating options to serve deep learning models on GPUs and decided to give it a try. It was actually pretty straightforward
 ---
 
 Microsoft recently [announced](https://azure.microsoft.com/en-in/blog/azure-n-series-preview-availability/) provision of GPU based Virtual Machines as Azure N-Series. There are two categories:

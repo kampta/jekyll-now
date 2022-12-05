@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Deciphering a puzzle from a company's hiring page I came across
-excerpt: A friend asked me to look at a puzzle at the hiring page of a company he was applying to. Here is my attempt to the problem. Haven't seen the problem before, so I am not sure if I solved it completely, but sharing my attempt here.
+excerpt: A friend asked me to look at a puzzle at the hiring page of a company he was applying to. Here is my attempt to the problem. Haven't seen the problem before, so I am not sure if I solved it completely, but sharing my attempt here
 ---
 
 ## Information Provided

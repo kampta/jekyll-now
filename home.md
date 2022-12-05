@@ -79,7 +79,7 @@ I also co-founded a startup helping users design their wardrobes by "learning" a
 
         <img src="/images/{{ post.gif }}" alt="HTML5 Icon" style="width:180px;height:180px;float:left;margin-right:2em;">
 
-        <p><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }} </a> ({{ post.conference}}) </p>
+        <p><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }} </a> <br> {{ post.conference}} </p>
         <auth>{{ post.authors }} </auth>
 
         <div class="entry">
@@ -87,9 +87,15 @@ I also co-founded a startup helping users design their wardrobes by "learning" a
         </div>
 
         <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Web</a> &nbsp;/&nbsp;
+        {% if post.code contains "http" %}
         <a href="{{ post.code }}" class="read-more">Code</a> &nbsp;/&nbsp;&nbsp;
+        {% else %}
+        Code &nbsp;/&nbsp;&nbsp;
+        {% endif %}
         {% if post.paper contains "arxiv" %}
         <a href="{{ post.paper }}" class="read-more">arXiv</a>
+        {% else if post.paper contains "http" %}
+        Paper
         {% else %}
         <a href="{{ post.paper }}" class="read-more">Paper</a>
         {% endif %}
@@ -100,7 +106,7 @@ I also co-founded a startup helping users design their wardrobes by "learning" a
 
         <img src="/images/{{ post.gif }}" alt="HTML5 Icon" style="width:180px;height:180px;float:left;margin-right:2em;">
 
-        <p><a href="{{ post.link }}">{{ post.title }} </a> ({{ post.conference}}) </p>
+        <p><a href="{{ post.link }}">{{ post.title }} </a> <br> {{ post.conference}} </p>
         <auth>{{ post.authors }} </auth>
 
         <div class="entry">
@@ -108,9 +114,15 @@ I also co-founded a startup helping users design their wardrobes by "learning" a
         </div>
 
         <a href="{{ post.link }}" class="read-more">Web</a> &nbsp;/&nbsp;
+        {% if post.code contains "http" %}
         <a href="{{ post.code }}" class="read-more">Code</a> &nbsp;/&nbsp;&nbsp;
+        {% else %}
+        Code &nbsp;/&nbsp;&nbsp;
+        {% endif %}
         {% if post.paper contains "arxiv" %}
         <a href="{{ post.paper }}" class="read-more">arXiv</a>
+        {% else if post.paper contains "http" %}
+        Paper
         {% else %}
         <a href="{{ post.paper }}" class="read-more">Paper</a>
         {% endif %}
