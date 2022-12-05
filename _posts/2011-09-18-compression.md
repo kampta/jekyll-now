@@ -1,6 +1,6 @@
 ---
 layout: project
-title: A Compression Scheme for Handwritten Patterns Based on Curve Fitting
+title: A Compression Scheme for Handwritten Patterns
 excerpt: A method to compress hand-written patterns recorded as strokes in order of their temporal occurrence using B-Spline Curves 
 code: 
 paper: http://www.iapr-tc11.org/archive/icdar2011/fileup/PDF/4520b115.pdf
