@@ -53,6 +53,7 @@ and academia (<a href="https://data61.csiro.au">NICTA</a>,
 I also co-founded a startup helping users design their wardrobes by "learning" a fashion knowledge graph from social network data.
 
 ## Recent News
+* Jan. 2023: [LilNetX](https://arxiv.org/abs/2204.02965) accepted to ICLR 2023
 * July 2022: [Neural Space-filling Curves](https://hywang66.github.io/publication/neuralsfc) accepted to ECCV 2022
 * July 2022: Attended International Computer Vision Summer School, [ICVSS 2022](https://iplab.dmi.unict.it/icvss2022/)
 * May 2022: Started an internship with Google AR and Google Research
