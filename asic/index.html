@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="ASIC: Aligning Sparse in-the-wild Image Collections">
+  <meta name="keywords" content="ASIC, Correspondence, Dense Correspondence, Vision Transformer, DINO">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ASIC: Aligning Sparse in-the-wild Image Collections</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', '');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.ico">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <!-- <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://kampta.github.io">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div> -->
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"> ASIC: Aligning Sparse in-the-wild <br> Image Collections</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://kampta.github.io">Kamal Gupta</a><sup>1,2</sup>,</span>
+            <span class="author-block">
+              <a href="https://varunjampani.github.io">Varun Jampani</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="https://machc.github.io/">Carlos Esteves</a><sup>2</sup>,
+            </span><br>
+            <span class="author-block">
+              <a href="https://www.cs.umd.edu/~abhinav">Abhinav Shrivastava</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.ameeshmakadia.com/">Ameesh Makadia</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.cs.cornell.edu/~snavely/">Noah Snavely</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://abhishekkar.info/">Abhishek Kar</a><sup>2</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Maryland, College Park,</span>
+            <span class="author-block"><sup>2</sup>Google</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=fLjkkMriuoY"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming Soon)</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop is-small">
+    <div class="hero-body">
+        <img src="./static/images/cow.jpg"
+             class="interpolation-image"
+             alt="Dense alignment cow dataset.">
+      <h2 class="content has-text-centered">
+        <span class="asic"> <strong>ASIC</strong></span> computes a dense alignment of sparse in-the-wild images of an object or object category.
+        <b>Top row</b>: Input images.  <b>Middle row</b>: Dense alignment computed by ASIC.  <b>Bottom row</b>: Dense warping from source image to other images in the dataset.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="hero-body">
+          <img src="./static/images/cow.jpg"
+               class="interpolation-image"
+               alt="Dense alignment cow dataset.">
+        </div>
+        <div class="hero-body">
+          <img src="./static/images/cow.jpg"
+               class="interpolation-image"
+               alt="Dense alignment cow dataset.">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We present a method for joint alignment of sparse in-the-wild
+            image collections of an object category.
+          </p>
+          <p>
+            Most prior works assume either ground-truth keypoint annotations 
+            or a large dataset of images of a single object category. 
+            However, neither of the above assumptions hold true for 
+            the long-tail of the objects present in the world. 
+            We present a self-supervised technique that directly optimizes 
+            on a sparse collection of images of a particular object/object category 
+            to obtain consistent dense correspondences across the collection. 
+
+          </p>
+          <p>
+            We use pairwise nearest neighbors obtained from deep features of a pre-trained vision transformer (ViT) 
+            model as noisy and sparse keypoint matches and make them dense and accurate matches
+            by optimizing a neural network that jointly maps the image collection 
+            into a learned canonical grid. Experiments on CUB and SPair-71k benchmarks 
+            demonstrate that our method can produce globally consistent and 
+            higher quality correspondences across the image collection when compared to existing self-supervised methods.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/fLjkkMriuoY?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<!-- <section class="hero is-light is-normal">
+  <div class="hero-body">
+    <div class="container is-centered is-max-desktop has-text-centered"> -->
+<section class="section">
+  <div class="container is-centered is-max-desktop has-text-centered">
+      <h2 class="title is-3">Dense Alignment</h2>
+      <div id="results-carousel" class="carousel results-carousel" slidesToShow="2">
+        <div class="item item-bird">
+          <img src="./static/images/bird.jpeg"
+             class="interpolation-image"
+             alt="Dense alignment bird dataset.">
+        </div>
+        <div class="item item-cat">
+          <img src="./static/images/cat.jpeg"
+             class="interpolation-image"
+             alt="Dense alignment cat dataset.">
+        </div>
+        <div class="item item-dog">
+          <img src="./static/images/dog.jpeg"
+             class="interpolation-image"
+             alt="Dense alignment dog dataset.">
+        </div>
+        <div class="item item-robot">
+          <img src="./static/images/robot.jpeg"
+             class="interpolation-image"
+             alt="Dense alignment robot dataset.">
+        </div>
+        <div class="item item-shoe">
+          <img src="./static/images/shoe.jpeg"
+             class="interpolation-image"
+             alt="Dense alignment shoe dataset.">
+        </div>
+        <div class="item item-train">
+          <img src="./static/images/train.jpeg"
+             class="interpolation-image"
+             alt="Dense alignment train dataset.">
+        </div>
+      </div>
+      <h2 class="content has-text-centered">
+        Coarse parts computed by self-supervised methods vs. Dense alignment learned by <strong>ASIC</strong>.
+      </h2>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3">Dense Warping</h2>
+    <div class="item item-cat">
+      <img src="./static/images/Warped.jpg"
+         class="interpolation-image"
+         alt="Dense Warping.">
+    </div>
+    <h2 class="content has-text-centered">
+      Dense warping from a source image (top row) to a target image (second row).
+      <strong>ASIC</strong> produces dense and semantically more meaningful warps from the source to the target.
+    </h2>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3">Edit Propagation</h2>
+    <div class="columns is-centered has-text-centered">
+      
+
+      <!-- Visual Effects. -->
+      <div class="column">
+        <div class="content">
+          <!-- <h2 class="title is-3">Visual Effects</h2> -->
+          <div class="item item-cat">
+            <img src="./static/videos/cat_in_opt.gif"
+               class="interpolation-image"
+               alt="Dense alignment cat video.">
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content">
+          <!-- <h2 class="title is-3">Visual Effects</h2> -->
+          <div class="item item-cat">
+            <img src="./static/videos/cat_out_opt.gif"
+               class="interpolation-image"
+               alt="Dense alignment cat video.">
+          </div>
+        </div>
+      </div>
+      <!--/ Visual Effects. -->
+
+      <!-- Matting. -->
+      <div class="column">
+        <!-- <h2 class="title is-3">Matting</h2> -->
+        <div class="content">
+          <!-- <h2 class="title is-3">Visual Effects</h2> -->
+          <div class="item item-cat">
+            <img src="./static/videos/seal_in_opt.gif"
+               class="interpolation-image"
+               alt="Dense alignment cat dataset.">
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <!-- <h2 class="title is-3">Matting</h2> -->
+        <div class="content">
+          <!-- <h2 class="title is-3">Visual Effects</h2> -->
+          <div class="item item-cat">
+            <img src="./static/videos/seal_out_opt.gif"
+               class="interpolation-image"
+               alt="Dense alignment cat dataset.">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Matting. -->
+    <h2 class="content has-text-centered">
+      <strong>ASIC</strong> can be used for edit propagation applications for images and video.
+      In each example, we trained ASIC on 30 video frames and propagate an edit from the first frame to other frames in the video.
+    </h2>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{gupta2023asic,
+  author    = {Gupta, Kamal and Jampani, Varun and Esteves, Carlos and Shrivastava, Abhinav and Makadia, Abhinav and Snavely, Noah and Kar, Abhishek},
+  title     = {ASIC: Aligning Sparse in-the-wild Image Collections},
+  journal   = {arXiv},
+  year      = {2023},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <span class="link-block">
+        <a href="https://arxiv.org/pdf/"
+           class="external-link button is-normal is-rounded is-dark">
+          <span class="icon">
+              <i class="fas fa-file-pdf"></i>
+          </span>
+          <span>Paper</span>
+        </a>
+      </span>
+      <span class="link-block">
+        <a href="https://arxiv.org/abs/"
+           class="external-link button is-normal is-rounded is-dark">
+          <span class="icon">
+              <i class="ai ai-arxiv"></i>
+          </span>
+          <span>arXiv</span>
+        </a>
+      </span>
+      <!-- Video Link. -->
+      <span class="link-block">
+        <a href="https://www.youtube.com/watch?v=fLjkkMriuoY"
+           class="external-link button is-normal is-rounded is-dark">
+          <span class="icon">
+              <i class="fab fa-youtube"></i>
+          </span>
+          <span>Video</span>
+        </a>
+      </span>
+      <!-- Code Link. -->
+      <span class="link-block">
+        <a href=""
+           class="external-link button is-normal is-rounded is-dark">
+          <span class="icon">
+              <i class="fab fa-github"></i>
+          </span>
+          <span>Code (Coming Soon)</span>
+          </a>
+      </span>
+
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-4">
+        <div class="content">
+            Template borrowed from awesome <a
+            href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> website.
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
