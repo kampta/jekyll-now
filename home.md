@@ -54,7 +54,7 @@ and academia (<a href="https://data61.csiro.au">NICTA</a>,
 I also co-founded a startup helping users design their wardrobes by "learning" a fashion knowledge graph from social network data.
 
 ## Recent News
-* July 2023: [ASIC](https://kampta.github.io/asic), SHACIRA, and Chop&Learn accepeted to ICCV 2023!
+* July 2023: [ASIC](https://kampta.github.io/asic), SHACIRA, and Chop&Learn accepted to ICCV 2023!
 * May 2023: Joined [Tesla Optimus](https://www.tesla.com/AI) as Senior Research Scientist
 * Apr. 2023: Defended my Ph.D. "Learning and Composing Primitives for the Visual World". Check out [my thesis](https://www.proquest.com/docview/2830050589)
 * Jan. 2023: [LilNetX](https://arxiv.org/abs/2204.02965) accepted to ICLR 2023
