@@ -43,7 +43,7 @@ My long-term goal is to build intelligent agents that can <em>see</em> (through 
 
 <!-- My research interests lie at the intersection of Computer Vision, Graphics, and Machine Learning. 
 My long term goal is to learn from Internet-scale data and enable storytellers to create intricate 3D visual content seamlessly. -->
-I received my Ph.D in Artificial Intelligence  of <a href="https://www.cs.umd.edu/">Computer Science</a> at 
+I received my Ph.D in Artificial Intelligence at 
 <a href="https://www.umd.edu/">University of Maryland College Park</a>. I also interned at <a href="https://www.google.com/">Google</a>, <a href="https://github.com/NVlabs">NVIDIA</a>, and <a href="https://www.amazon.science/">Amazon</a> AI Labs.
 Before starting my Ph. D., I spent 5 years prototyping and scaling Vision and ML products in both industry 
 (<a href="http://netradyne.com/">Netradyne</a>, 
