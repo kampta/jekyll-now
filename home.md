@@ -35,15 +35,16 @@ permalink: /about/
 
 [comment]: <> (I also briefly co-founded a startup helping users design their wardrobe by bringing fast fashion recommendations from social networks.)
 
-I am a fifth year Ph.D. candidate in the Department of <a href="https://www.cs.umd.edu/">Computer Science</a> at 
-<a href="https://www.umd.edu/">University of Maryland College Park</a> where I work with 
-<a href="http://users.umiacs.umd.edu/~lsd">Larry Davis</a> 
-and <a href="https://www.cs.umd.edu/~abhinav">Abhinav Shrivastava</a>. I also interned at <a href="https://www.google.com/">Google</a>, <a href="https://github.com/NVlabs">NVIDIA</a>, and <a href="https://www.amazon.science/">Amazon</a>.
+I am a neural plumber  at [Tesla Optimus](https://www.tesla.com/AI) team.
 
-My research interests lie at the intersection of Computer Vision, Graphics, and Machine Learning. 
-My long term goal is to learn from Internet-scale data and enable storytellers to create intricate 3D visual content seamlessly.
+My research interests lie at the intersection of Computer Vision, Graphics, and Robotics.
+My long-term goal is to build intelligent agents that can <em>see</em> (through vision, audio, and other senses), <em>interact</em> (navigate and act in an environment), and
+<em>reason</em> (plan long-term actions from sparse rewards).
 
-[comment]: <> (I am a recipient of the Kulkarni fellowship and Dean's fellowship at the University of Maryland.)
+<!-- My research interests lie at the intersection of Computer Vision, Graphics, and Machine Learning. 
+My long term goal is to learn from Internet-scale data and enable storytellers to create intricate 3D visual content seamlessly. -->
+I received my Ph.D in Artificial Intelligence  of <a href="https://www.cs.umd.edu/">Computer Science</a> at 
+<a href="https://www.umd.edu/">University of Maryland College Park</a>. I also interned at <a href="https://www.google.com/">Google</a>, <a href="https://github.com/NVlabs">NVIDIA</a>, and <a href="https://www.amazon.science/">Amazon</a> AI Labs.
 Before starting my Ph. D., I spent 5 years prototyping and scaling Vision and ML products in both industry 
 (<a href="http://netradyne.com/">Netradyne</a>, 
 <a href="https://www.americanexpress.com/in/careers/ai-labs.html">American Express</a>), 
@@ -53,7 +54,9 @@ and academia (<a href="https://data61.csiro.au">NICTA</a>,
 I also co-founded a startup helping users design their wardrobes by "learning" a fashion knowledge graph from social network data.
 
 ## Recent News
-* Feb. 2023: [Teaching Matters ...](https://arxiv.org/abs/2212.03862) accepted to CVPR 2023
+* July 2023: [ASIC](https://kampta.github.io/asic), SHACIRA, and Chop&Learn accepeted to ICCV 2023!
+* May 2023: Joined [Tesla Optimus](https://www.tesla.com/AI) as Senior Research Scientist
+* Apr. 2023: Defended my Ph.D. "Learning and Composing Primitives for the Visual World". Check out [my thesis](https://www.proquest.com/docview/2830050589)
 * Jan. 2023: [LilNetX](https://arxiv.org/abs/2204.02965) accepted to ICLR 2023
 * July 2022: [Neural Space-filling Curves](https://hywang66.github.io/publication/neuralsfc) accepted to ECCV 2022
 * July 2022: Attended International Computer Vision Summer School, [ICVSS 2022](https://iplab.dmi.unict.it/icvss2022/)
