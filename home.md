@@ -43,7 +43,7 @@ My long-term goal is to build intelligent agents that can <em>see</em> (through 
 
 <!-- My research interests lie at the intersection of Computer Vision, Graphics, and Machine Learning. 
 My long term goal is to learn from Internet-scale data and enable storytellers to create intricate 3D visual content seamlessly. -->
-I received my Ph.D in Artificial Intelligence at 
+I got my Ph.D in Artificial Intelligence at 
 <a href="https://www.umd.edu/">University of Maryland College Park</a>. I also interned at <a href="https://www.google.com/">Google</a>, <a href="https://github.com/NVlabs">NVIDIA</a>, and <a href="https://www.amazon.science/">Amazon</a> AI Labs.
 Before starting my Ph. D., I spent 5 years prototyping and scaling Vision and ML products in both industry 
 (<a href="http://netradyne.com/">Netradyne</a>, 
@@ -54,22 +54,24 @@ and academia (<a href="https://data61.csiro.au">NICTA</a>,
 I also co-founded a startup helping users design their wardrobes by "learning" a fashion knowledge graph from social network data.
 
 ## Recent News
-* July 2023: [ASIC](https://kampta.github.io/asic), SHACIRA, and Chop&Learn accepted to ICCV 2023!
+* Sep. 2023: Optimus [learns to play with legos](https://twitter.com/Tesla_Optimus/status/1705728820693668189)
+* July 2023: [ASIC](https://kampta.github.io/asic), [SHACIRA](https://shacira.github.io/), and [Chop&Learn](https://chopnlearn.github.io/) accepted to ICCV 2023!
 * May 2023: Joined [Tesla Optimus](https://www.tesla.com/AI) as Senior Research Scientist
-* Apr. 2023: Defended my Ph.D. "Learning and Composing Primitives for the Visual World". Check out [my thesis](https://www.proquest.com/docview/2830050589)
+* Apr. 2023: Defended my Ph.D. Check out [my thesis](https://www.proquest.com/docview/2830050589)
 * Jan. 2023: [LilNetX](https://arxiv.org/abs/2204.02965) accepted to ICLR 2023
 * July 2022: [Neural Space-filling Curves](https://hywang66.github.io/publication/neuralsfc) accepted to ECCV 2022
 * July 2022: Attended International Computer Vision Summer School, [ICVSS 2022](https://iplab.dmi.unict.it/icvss2022/)
 * May 2022: Started an internship with Google AR and Google Research
 * Apr. 2022: Outstanding Reviewer [Award](https://cvpr2022.thecvf.com/outstanding-reviewers) at CVPR 2022
 * Jan. 2022: Outstanding Graduate Assistant [Award](https://www.gradschool.umd.edu/funding/student-fellowships-awards/outstanding-graduate-assistant-awards) by the Graduate School, UMD
-* Sep. 2021: [PatchGame](https://arxiv.org/abs/2111.01785) accepted to NeurIPS 2021
-* July 2021: [LayoutTransformer](https://arxiv.org/abs/2006.14615) accepted to ICCV 2021
-* May 2021: Started an internship at NVIDIA AI
-* Feb. 2021: [LTH for Object Recognition](https://lth-recognition.github.io/) accepted to CVPR 2021
-* Oct. 2020: [Multiview Shapes](https://ieeexplore.ieee.org/abstract/document/9320100) accepted to 3DV 2020
-* May 2020: Awarded [Kulkarni Fellowship](https://gradschool.umd.edu/funding/student-fellowships-awards/kulkarni-foundation-summer-research-fellowship)
-* Feb. 2020: [PatchVAE](https://arxiv.org/abs/2004.03623) accepted to CVPR 2020
+
+[comment]: <> (* Sep. 2021: [PatchGame](https://arxiv.org/abs/2111.01785) accepted to NeurIPS 2021)
+[comment]: <> (* July 2021: [LayoutTransformer](https://arxiv.org/abs/2006.14615) accepted to ICCV 2021)
+[comment]: <> (* May 2021: Started an internship at NVIDIA AI)
+[comment]: <> (* Feb. 2021: [LTH for Object Recognition](https://lth-recognition.github.io/) accepted to CVPR 2021)
+[comment]: <> (* Oct. 2020: [Multiview Shapes](https://ieeexplore.ieee.org/abstract/document/9320100) accepted to 3DV 2020)
+[comment]: <> (* May 2020: Awarded [Kulkarni Fellowship](https://gradschool.umd.edu/funding/student-fellowships-awards/kulkarni-foundation-summer-research-fellowship))
+[comment]: <> (* Feb. 2020: [PatchVAE](https://arxiv.org/abs/2004.03623) accepted to CVPR 2020)
 
 ## Research Projects
 
