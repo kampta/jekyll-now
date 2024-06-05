@@ -35,7 +35,7 @@ permalink: /about/
 
 [comment]: <> (I also briefly co-founded a startup helping users design their wardrobe by bringing fast fashion recommendations from social networks.)
 
-I am a neural plumber  at [Tesla Optimus](https://www.tesla.com/AI) team.
+I am a roboticist at [Tesla Optimus](https://www.tesla.com/AI) team.
 
 My research interests lie at the intersection of Computer Vision, Graphics, and Robotics.
 My long-term goal is to build intelligent agents that can <em>see</em> (through vision, audio, and other senses), <em>interact</em> (navigate and act in an environment), and
@@ -54,6 +54,7 @@ and academia (<a href="https://data61.csiro.au">NICTA</a>,
 I also co-founded a startup helping users design their wardrobes by "learning" a fashion knowledge graph from social network data.
 
 ## Recent News
+* May 2024: Optimus [goes to the factory](https://twitter.com/kamalgupta09/status/1787119534094377326)
 * Sep. 2023: Optimus [learns to play with legos](https://twitter.com/Tesla_Optimus/status/1705728820693668189)
 * July 2023: [ASIC](https://kampta.github.io/asic), [SHACIRA](https://shacira.github.io/), and [Chop&Learn](https://chopnlearn.github.io/) accepted to ICCV 2023!
 * May 2023: Joined [Tesla Optimus](https://www.tesla.com/AI) as Senior Research Scientist
